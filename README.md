@@ -46,16 +46,47 @@ flowchart LR
 
 ### Install
 
+Requires [Claude Code](https://claude.com/claude-code).
+
+**All 37 skills — macOS / Linux:**
+
 ```bash
 git clone https://github.com/cdgutierrez6/claude-skills.git
+mkdir -p ~/.claude/skills
 cp -r claude-skills/skills/* ~/.claude/skills/
 ```
 
-Then invoke any of them by name from Claude Code:
+**All 37 skills — Windows (PowerShell):**
+
+```powershell
+git clone https://github.com/cdgutierrez6/claude-skills.git
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
+Copy-Item -Recurse -Force claude-skills\skills\* "$env:USERPROFILE\.claude\skills\"
+```
+
+**Just one skill:**
+
+```bash
+cp -r claude-skills/skills/tech-lead-senior ~/.claude/skills/
+```
+
+**Then restart Claude Code.** Each skill is discovered from its `description` and fires when the task matches it — you do not have to memorize names. You can also ask for one explicitly:
 
 ```
-/tech-lead-senior
+use tech-lead-senior to review this PR
 ```
+
+**Update:**
+
+```bash
+cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
+```
+
+**Uninstall:** delete the folders you copied from `~/.claude/skills/`. Nothing else is touched.
+
+> **Scope** — `~/.claude/skills/` makes them available in every project. To limit them to one repo, copy into `<repo>/.claude/skills/` instead.
+>
+> **Layout** — every skill is `<name>/SKILL.md` (uppercase, exact) with YAML frontmatter carrying `name` and `description`. Filename case matters on Linux and macOS.
 
 ### Design principles
 
@@ -112,16 +143,47 @@ flowchart LR
 
 ### Instalación
 
+Requiere [Claude Code](https://claude.com/claude-code).
+
+**Las 37 skills — macOS / Linux:**
+
 ```bash
 git clone https://github.com/cdgutierrez6/claude-skills.git
+mkdir -p ~/.claude/skills
 cp -r claude-skills/skills/* ~/.claude/skills/
 ```
 
-Luego invoca cualquiera por su nombre desde Claude Code:
+**Las 37 skills — Windows (PowerShell):**
+
+```powershell
+git clone https://github.com/cdgutierrez6/claude-skills.git
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
+Copy-Item -Recurse -Force claude-skills\skills\* "$env:USERPROFILE\.claude\skills\"
+```
+
+**Una sola skill:**
+
+```bash
+cp -r claude-skills/skills/tech-lead-senior ~/.claude/skills/
+```
+
+**Luego reinicia Claude Code.** Cada skill se descubre por su `description` y se dispara sola cuando la tarea coincide — no hay que memorizar nombres. También puedes pedirla explícitamente:
 
 ```
-/tech-lead-senior
+usa tech-lead-senior para revisar este PR
 ```
+
+**Actualizar:**
+
+```bash
+cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
+```
+
+**Desinstalar:** borra de `~/.claude/skills/` las carpetas que copiaste. No se toca nada más.
+
+> **Alcance** — `~/.claude/skills/` las deja disponibles en todos los proyectos. Para limitarlas a un solo repo, cópialas en `<repo>/.claude/skills/`.
+>
+> **Estructura** — cada skill es `<nombre>/SKILL.md` (mayúsculas, exacto) con frontmatter YAML que lleva `name` y `description`. En Linux y macOS las mayúsculas del nombre de archivo importan.
 
 ### Principios de diseño
 

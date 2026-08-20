@@ -53,17 +53,23 @@ Requires [Claude Code](https://claude.com/claude-code).
 
 ```bash
 git clone https://github.com/cdgutierrez6/claude-skills.git
-mkdir -p ~/.claude/skills
+mkdir -p ~/.claude/skills ~/.claude/templates
 cp -r claude-skills/skills/* ~/.claude/skills/
+cp -r claude-skills/templates/* ~/.claude/templates/
 ```
 
 **All 37 skills — Windows (PowerShell):**
 
 ```powershell
 git clone https://github.com/cdgutierrez6/claude-skills.git
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills", "$env:USERPROFILE\.claude\templates" | Out-Null
 Copy-Item -Recurse -Force claude-skills\skills\* "$env:USERPROFILE\.claude\skills\"
+Copy-Item -Recurse -Force claude-skills\templates\* "$env:USERPROFILE\.claude\templates\"
 ```
+
+> Copia **también `templates/`**: los marketing skills (`growth-strategist-senior`,
+> `copywriter-senior`, `analytics-measurement-senior`) leen de ahí su esquema de intake y la
+> definición de la métrica. Sin esa carpeta funcionan, pero a ciegas.
 
 **Just one skill:**
 
@@ -102,6 +108,7 @@ cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
 - Written mostly in **Spanish (es-CO)**, which is the language they were designed to operate in. The method transfers; the prose is Spanish.
 - Some skills reference the author's own projects as worked examples. No third-party client data is included.
 - Third-party skills the author uses but did not write (e.g. `gstack`, `graphify`) are **not** redistributed here — get them from their own authors.
+- A handful of skills cite commands, rules and notes that live outside this repo. **[`COMPATIBILIDAD.md`](COMPATIBILIDAD.md) documents every single one** and what to use instead — read it once after installing and nothing will be a mystery.
 
 ### Validation
 
@@ -159,17 +166,23 @@ Requiere [Claude Code](https://claude.com/claude-code).
 
 ```bash
 git clone https://github.com/cdgutierrez6/claude-skills.git
-mkdir -p ~/.claude/skills
+mkdir -p ~/.claude/skills ~/.claude/templates
 cp -r claude-skills/skills/* ~/.claude/skills/
+cp -r claude-skills/templates/* ~/.claude/templates/
 ```
 
 **Las 37 skills — Windows (PowerShell):**
 
 ```powershell
 git clone https://github.com/cdgutierrez6/claude-skills.git
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills", "$env:USERPROFILE\.claude\templates" | Out-Null
 Copy-Item -Recurse -Force claude-skills\skills\* "$env:USERPROFILE\.claude\skills\"
+Copy-Item -Recurse -Force claude-skills\templates\* "$env:USERPROFILE\.claude\templates\"
 ```
+
+> Copia **también `templates/`**: los skills de marketing (`growth-strategist-senior`,
+> `copywriter-senior`, `analytics-measurement-senior`) leen de ahí su esquema de intake y la
+> definición de la métrica. Sin esa carpeta funcionan, pero a ciegas.
 
 **Una sola skill:**
 
@@ -208,6 +221,7 @@ cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
 - Escritas mayormente en **español (es-CO)**, que es el idioma en el que fueron diseñadas para operar. El método se transfiere; la prosa es en español.
 - Algunas skills citan proyectos propios del autor como ejemplos trabajados. No se incluye ningún dato de clientes de terceros.
 - Las skills de terceros que el autor usa pero no escribió (p. ej. `gstack`, `graphify`) **no** se redistribuyen aquí — consíguelas de sus autores.
+- Algunas skills citan comandos, reglas y notas que viven fuera de este repo. **[`COMPATIBILIDAD.md`](COMPATIBILIDAD.md) las documenta todas** y con qué sustituirlas — léelo una vez tras instalar y no te queda ningún hueco.
 
 ### Validación
 

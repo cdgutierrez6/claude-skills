@@ -27,6 +27,12 @@ jobs:
       - name: Validar estructura y frontmatter de cada skill
         run: python scripts/validate_skills.py --skills-dir skills
 
+      - name: Toda referencia externa debe estar en COMPATIBILIDAD.md
+        # Sin esto el documento envejece en silencio: se anade una skill que
+        # cita /opsx o una REGLA #10, nadie actualiza el doc, y quien clone el
+        # repo se vuelve a encontrar el hueco sin ninguna alarma.
+        run: python scripts/validate_external_refs.py
+
       - name: Verificar que no hay nombres de archivo en minuscula
         # Red de seguridad independiente del script de Python: si alguien
         # renombra o mueve el validador, esto sigue atrapando el caso original.

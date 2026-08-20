@@ -120,8 +120,9 @@ cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
 
 ### Validation
 
-Every push and PR runs two checks on Linux (case-sensitive filesystem, so a lowercase `skill.md` fails there even if it works on Windows):
+Every push and PR runs these on Linux (case-sensitive filesystem, so a lowercase `skill.md` fails there even if it works on Windows):
 
+- [`scripts/test_validators.py`](scripts/test_validators.py) — **22 tests of the validators themselves**, run first. Each injects a failure mode taken from a real bug in this repo and demands it be caught, plus control cases that must *not* be flagged. A validator that always passes is worse than no validator.
 - [`scripts/validate_skills.py`](scripts/validate_skills.py) — each skill has a `SKILL.md` (exact case), valid YAML frontmatter, a `name` matching its folder, and a `description` long enough to be triggerable.
 - [`scripts/validate_external_refs.py`](scripts/validate_external_refs.py) — every external reference (a command, a `REGLA #N`, a `[[note]]` that lives outside this repo) is explained in [`COMPATIBILIDAD.md`](COMPATIBILIDAD.md). Without this the doc would age silently and the gaps would come back unnoticed.
 
@@ -246,8 +247,9 @@ cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
 
 ### Validación
 
-Cada push y cada PR corre dos comprobaciones sobre Linux (filesystem case-sensitive, así que un `skill.md` en minúscula falla ahí aunque funcione en Windows):
+Cada push y cada PR corre esto sobre Linux (filesystem case-sensitive, así que un `skill.md` en minúscula falla ahí aunque funcione en Windows):
 
+- [`scripts/test_validators.py`](scripts/test_validators.py) — **22 tests de los propios validadores**, y van primero. Cada uno inyecta un modo de fallo sacado de un bug real de este repo y exige que se detecte, más casos de control que *no* deben marcarse. Un validador que siempre pasa es peor que no tener validador.
 - [`scripts/validate_skills.py`](scripts/validate_skills.py) — cada skill tiene su `SKILL.md` (mayúsculas exactas), frontmatter YAML válido, un `name` que coincide con su carpeta y una `description` lo bastante larga como para poder dispararse.
 - [`scripts/validate_external_refs.py`](scripts/validate_external_refs.py) — toda referencia externa (un comando, una `REGLA #N`, una `[[nota]]` que vive fuera de este repo) está explicada en [`COMPATIBILIDAD.md`](COMPATIBILIDAD.md). Sin esto el documento envejecería en silencio y los huecos volverían sin que salte ninguna alarma.
 

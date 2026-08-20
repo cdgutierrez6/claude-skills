@@ -39,6 +39,12 @@ jobs:
         # repo se vuelve a encontrar el hueco sin ninguna alarma.
         run: python scripts/validate_external_refs.py
 
+      - name: Los dos idiomas del README deben decir lo mismo
+        # El README es bilingue y cada cambio hay que aplicarlo dos veces. Ya
+        # derivo una vez: el comando local de validacion se actualizo en un
+        # idioma y no en el otro, y nada lo detecto.
+        run: python scripts/validate_readme_parity.py
+
       - name: Verificar que no hay nombres de archivo en minuscula
         # Red de seguridad independiente del script de Python: si alguien
         # renombra o mueve el validador, esto sigue atrapando el caso original.

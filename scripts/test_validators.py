@@ -37,6 +37,7 @@ from validate_skills import validate_skill  # noqa: E402
 
 VALIDATE_REFS = os.path.join(HERE, "validate_external_refs.py")
 VERIFY_INSTALL = os.path.join(HERE, "verify_install.py")
+READ_PARITY = os.path.join(HERE, "validate_readme_parity.py")
 
 # Larga a proposito: supera el minimo de caracteres, para que ningun test falle
 # por un motivo distinto del que esta probando.
@@ -284,6 +285,81 @@ class TestVerifyInstall(unittest.TestCase):
         code, out = self.check()
         self.assertEqual(code, 1)
         self.assertIn("ninguna skill", out)
+
+
+class TestReadmeParity(unittest.TestCase):
+    """Los dos bloques de idioma del README no pueden derivar en silencio."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = self.tmp.name
+
+    def tearDown(self) -> None:
+        self.tmp.cleanup()
+
+    def readme(self, primary: str, mirror: str) -> None:
+        write(os.path.join(self.root, "README.md"),
+              "# Titulo\n\n<details open>\n<summary><h2>Uno</h2></summary>\n\n%s\n\n</details>\n\n"
+              "<details>\n<summary><h2>Dos</h2></summary>\n\n%s\n\n</details>\n" % (primary, mirror))
+
+    def check(self):
+        return run(READ_PARITY, [], self.root)
+
+    def test_bloques_sincronizados_pasan(self):
+        body = "### Seccion\n\n```bash\npython algo.py\n```\n\nVer [doc](COMPATIBILIDAD.md).\n"
+        self.readme(body, body)
+        code, out = self.check()
+        self.assertEqual(code, 0, out)
+
+    def test_comando_distinto_falla(self):
+        # El bug real: se actualizo el comando en un idioma y no en el otro.
+        self.readme("### A\n\n```bash\npython uno.py && python dos.py\n```\n",
+                    "### A\n\n```bash\npython uno.py\n```\n")
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("bash", out)
+
+    def test_secuencia_de_bloques_distinta_falla(self):
+        self.readme("### A\n\n```bash\nls\n```\n\n```powershell\nGet-ChildItem\n```\n",
+                    "### A\n\n```bash\nls\n```\n")
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("secuencia", out)
+
+    def test_enlace_en_un_solo_idioma_falla(self):
+        self.readme("### A\n\nVer [doc](COMPATIBILIDAD.md) y [otro](scripts/x.py).\n",
+                    "### A\n\nVer [doc](COMPATIBILIDAD.md).\n")
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("scripts/x.py", out)
+
+    def test_seccion_anadida_en_un_solo_idioma_falla(self):
+        self.readme("### A\n\ntexto\n\n### B\n\nmas texto\n", "### A\n\ntexto\n")
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("subsecciones", out)
+
+    def test_mermaid_traducido_no_es_error(self):
+        # Las etiquetas de los nodos SI se traducen: marcarlo seria un falso
+        # positivo que obligaria a dejar el diagrama en un solo idioma.
+        self.readme('### A\n\n```mermaid\nflowchart LR\n  A["Parallel review"]\n```\n',
+                    '### A\n\n```mermaid\nflowchart LR\n  A["Revision paralela"]\n```\n')
+        code, out = self.check()
+        self.assertEqual(code, 0, out)
+
+    def test_bloque_sin_lenguaje_traducido_no_es_error(self):
+        # Son ejemplos de prosa ("use X to review this PR"), no comandos.
+        self.readme("### A\n\n```\nuse tech-lead-senior to review this PR\n```\n",
+                    "### A\n\n```\nusa tech-lead-senior para revisar este PR\n```\n")
+        code, out = self.check()
+        self.assertEqual(code, 0, out)
+
+    def test_numero_de_bloques_de_idioma_inesperado_falla(self):
+        write(os.path.join(self.root, "README.md"),
+              "# Titulo\n\n<details>\n<summary>Solo uno</summary>\n\ntexto\n\n</details>\n")
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("2 bloques", out)
 
 
 if __name__ == "__main__":

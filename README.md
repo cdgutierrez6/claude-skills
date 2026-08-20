@@ -1,0 +1,140 @@
+# Claude Skills — Senior Engineering Pipeline
+
+![Claude Code](https://img.shields.io/badge/Claude_Code-CC785C?style=flat-square&logo=anthropic&logoColor=white)
+![Skills](https://img.shields.io/badge/37_skills-000000?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-3DA639?style=flat-square&logo=opensourceinitiative&logoColor=white)
+![Lang](https://img.shields.io/badge/es--CO_%2F_en-4B8BBE?style=flat-square)
+
+> **37 Claude Code skills** that turn a single prompt into a full senior engineering pipeline: planning, architecture, build, parallel review (tech lead + security + QA) and an independent LLM judge.
+
+---
+
+<details open>
+<summary><h2>🇺🇸 English</h2></summary>
+
+### What this is
+
+A set of role-based skills for [Claude Code](https://claude.com/claude-code). Each one encodes how a specific senior role works — not a prompt snippet, but a full operating procedure with checklists, gates and refusal conditions.
+
+They are designed to **talk to each other**: the planner hands off to the builders, the builders hand off to three reviewers running in parallel, and an independent judge audits the result before anything is called done.
+
+### Pipeline
+
+```mermaid
+flowchart LR
+    A["senior-project-planner"] --> B["arquitecto-senior"]
+    B --> C["backend-senior<br/>frontend-senior"]
+    C --> D{"Parallel review"}
+    D --> E["tech-lead-senior"]
+    D --> F["senior-security-auditor"]
+    D --> G["senior-qa-engineer"]
+    E --> H["llm-judge"]
+    F --> H
+    G --> H
+    H --> I["Ship"]
+```
+
+### Catalog
+
+| Area | Skills |
+|---|---|
+| **Engineering core** | `senior-project-planner` · `arquitecto-senior` · `backend-senior` · `frontend-senior` · `tech-lead-senior` · `senior-qa-engineer` · `senior-security-auditor` · `llm-judge` · `technical-writer` · `performance-engineer` · `devops-cloud-senior` · `devops-hostinger-senior` |
+| **Web & design** | `web-design-pro-2026` · `immersive-landing` · `ui-ux-pro-max` · `ux-senior` · `creative-frontend-max` |
+| **AI & data** | `ai-engineer` · `rag-engineer` · `langchain-agent-engineer` · `mcp-engineer` · `event-driven-ai` · `data-engineer` · `n8n-automation-engineer` |
+| **Product & growth** | `po-senior` · `growth-strategist-senior` · `copywriter-senior` · `saas-monetization-expert` · `analytics-measurement-senior` |
+| **Discovery** | `innovation-pipeline` · `scanning-tech-signals` · `scanning-market-demand` · `scanning-funding-access` · `filtering-opportunities` · `analyzing-with-frameworks` · `structuring-projects` · `reporting-daily-brief` |
+
+### Install
+
+```bash
+git clone https://github.com/cdgutierrez6/claude-skills.git
+cp -r claude-skills/skills/* ~/.claude/skills/
+```
+
+Then invoke any of them by name from Claude Code:
+
+```
+/tech-lead-senior
+```
+
+### Design principles
+
+- **Proportional process** — trivial edits go direct; features get a light pipeline; risky work (new project, DB schema, payments) gets the full one.
+- **Critical partner, not yes-man** — every review skill is written to disagree with reasons and propose a concrete alternative.
+- **Maintainability is a gate, not a wish** — "it compiles" is not the deliverable. Code any human can open in a year and understand is.
+- **Never delete core silently** — removing or reducing existing behavior is a product decision, never cleanup.
+- **Verify by running** — nothing is "done" without executing it.
+
+### Notes
+
+- Written mostly in **Spanish (es-CO)**, which is the language they were designed to operate in. The method transfers; the prose is Spanish.
+- Some skills reference the author's own projects as worked examples. No third-party client data is included.
+- Third-party skills the author uses but did not write (e.g. `gstack`, `graphify`) are **not** redistributed here — get them from their own authors.
+
+</details>
+
+---
+
+<details>
+<summary><h2>🇨🇴 Español</h2></summary>
+
+### Qué es esto
+
+Un conjunto de skills por rol para [Claude Code](https://claude.com/claude-code). Cada una codifica cómo trabaja un rol senior concreto — no es un fragmento de prompt, sino un procedimiento completo con checklists, gates y condiciones de rechazo.
+
+Están diseñadas para **hablarse entre ellas**: el planner entrega a los constructores, los constructores entregan a tres revisores en paralelo, y un juez independiente audita el resultado antes de dar nada por terminado.
+
+### Pipeline
+
+```mermaid
+flowchart LR
+    A["senior-project-planner"] --> B["arquitecto-senior"]
+    B --> C["backend-senior<br/>frontend-senior"]
+    C --> D{"Revisión paralela"}
+    D --> E["tech-lead-senior"]
+    D --> F["senior-security-auditor"]
+    D --> G["senior-qa-engineer"]
+    E --> H["llm-judge"]
+    F --> H
+    G --> H
+    H --> I["Ship"]
+```
+
+### Catálogo
+
+| Área | Skills |
+|---|---|
+| **Núcleo de ingeniería** | `senior-project-planner` · `arquitecto-senior` · `backend-senior` · `frontend-senior` · `tech-lead-senior` · `senior-qa-engineer` · `senior-security-auditor` · `llm-judge` · `technical-writer` · `performance-engineer` · `devops-cloud-senior` · `devops-hostinger-senior` |
+| **Web y diseño** | `web-design-pro-2026` · `immersive-landing` · `ui-ux-pro-max` · `ux-senior` · `creative-frontend-max` |
+| **IA y datos** | `ai-engineer` · `rag-engineer` · `langchain-agent-engineer` · `mcp-engineer` · `event-driven-ai` · `data-engineer` · `n8n-automation-engineer` |
+| **Producto y growth** | `po-senior` · `growth-strategist-senior` · `copywriter-senior` · `saas-monetization-expert` · `analytics-measurement-senior` |
+| **Discovery** | `innovation-pipeline` · `scanning-tech-signals` · `scanning-market-demand` · `scanning-funding-access` · `filtering-opportunities` · `analyzing-with-frameworks` · `structuring-projects` · `reporting-daily-brief` |
+
+### Instalación
+
+```bash
+git clone https://github.com/cdgutierrez6/claude-skills.git
+cp -r claude-skills/skills/* ~/.claude/skills/
+```
+
+Luego invoca cualquiera por su nombre desde Claude Code:
+
+```
+/tech-lead-senior
+```
+
+### Principios de diseño
+
+- **Proceso proporcional al riesgo** — la edición trivial va directa; una feature lleva pipeline liviano; lo caro o irreversible (proyecto nuevo, schema de DB, pagos) lleva el completo.
+- **Socio crítico, no asistente complaciente** — toda skill de revisión está escrita para discrepar con razones y proponer la alternativa concreta.
+- **La mantenibilidad es un gate, no un deseo** — "compila" no es el entregable. Código que cualquier humano abra en un año y entienda, sí.
+- **Nunca borrar el core en silencio** — quitar o reducir algo existente es decisión de producto, jamás "pulido".
+- **Verificar ejecutando** — nada está "hecho" sin correrlo.
+
+### Notas
+
+- Escritas mayormente en **español (es-CO)**, que es el idioma en el que fueron diseñadas para operar. El método se transfiere; la prosa es en español.
+- Algunas skills citan proyectos propios del autor como ejemplos trabajados. No se incluye ningún dato de clientes de terceros.
+- Las skills de terceros que el autor usa pero no escribió (p. ej. `gstack`, `graphify`) **no** se redistribuyen aquí — consíguelas de sus autores.
+
+</details>

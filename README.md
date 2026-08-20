@@ -126,11 +126,11 @@ Every push and PR runs these on Linux (case-sensitive filesystem, so a lowercase
 - [`scripts/validate_skills.py`](scripts/validate_skills.py) — each skill has a `SKILL.md` (exact case), valid YAML frontmatter, a `name` matching its folder, and a `description` long enough to be triggerable.
 - [`scripts/validate_external_refs.py`](scripts/validate_external_refs.py) — every external reference (a command, a `REGLA #N`, a `[[note]]` that lives outside this repo) is explained in [`COMPATIBILIDAD.md`](COMPATIBILIDAD.md). Without this the doc would age silently and the gaps would come back unnoticed.
 
-Run both before opening a PR:
+Run the same three before opening a PR, in the same order CI does:
 
 ```bash
 pip install pyyaml
-python scripts/validate_skills.py && python scripts/validate_external_refs.py
+python scripts/test_validators.py && python scripts/validate_skills.py && python scripts/validate_external_refs.py
 ```
 
 </details>
@@ -253,11 +253,11 @@ Cada push y cada PR corre esto sobre Linux (filesystem case-sensitive, así que 
 - [`scripts/validate_skills.py`](scripts/validate_skills.py) — cada skill tiene su `SKILL.md` (mayúsculas exactas), frontmatter YAML válido, un `name` que coincide con su carpeta y una `description` lo bastante larga como para poder dispararse.
 - [`scripts/validate_external_refs.py`](scripts/validate_external_refs.py) — toda referencia externa (un comando, una `REGLA #N`, una `[[nota]]` que vive fuera de este repo) está explicada en [`COMPATIBILIDAD.md`](COMPATIBILIDAD.md). Sin esto el documento envejecería en silencio y los huecos volverían sin que salte ninguna alarma.
 
-Corre las dos antes de abrir un PR:
+Corre las tres antes de abrir un PR, en el mismo orden que el CI:
 
 ```bash
 pip install pyyaml
-python scripts/validate_skills.py && python scripts/validate_external_refs.py
+python scripts/test_validators.py && python scripts/validate_skills.py && python scripts/validate_external_refs.py
 ```
 
 </details>

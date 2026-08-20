@@ -1,0 +1,40 @@
+name: Validar skills
+
+# Corre en ubuntu a proposito: su filesystem es case-sensitive, asi que un
+# `skill.md` en minuscula falla aqui aunque en el Windows del autor funcione.
+# Ese fue justamente el bug que se colo en el primer release.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar PyYAML
+        run: pip install --quiet pyyaml
+
+      - name: Validar estructura y frontmatter de cada skill
+        run: python scripts/validate_skills.py --skills-dir skills
+
+      - name: Verificar que no hay nombres de archivo en minuscula
+        # Red de seguridad independiente del script de Python: si alguien
+        # renombra o mueve el validador, esto sigue atrapando el caso original.
+        run: |
+          offenders=$(find skills -maxdepth 2 -name 'skill.md' -print)
+          if [ -n "$offenders" ]; then
+            echo "Estos archivos deben llamarse SKILL.md (mayusculas):"
+            echo "$offenders"
+            exit 1
+          fi
+          echo "OK: ningun skill.md en minuscula."

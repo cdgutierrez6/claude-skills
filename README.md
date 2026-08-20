@@ -3,6 +3,7 @@
 ![Claude Code](https://img.shields.io/badge/Claude_Code-CC785C?style=flat-square&logo=anthropic&logoColor=white)
 ![Skills](https://img.shields.io/badge/37_skills-000000?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-3DA639?style=flat-square&logo=opensourceinitiative&logoColor=white)
+[![Validar skills](https://github.com/cdgutierrez6/claude-skills/actions/workflows/validate-skills.yml/badge.svg)](https://github.com/cdgutierrez6/claude-skills/actions/workflows/validate-skills.yml)
 ![Lang](https://img.shields.io/badge/es--CO_%2F_en-4B8BBE?style=flat-square)
 
 > **37 Claude Code skills** that turn a single prompt into a full senior engineering pipeline: planning, architecture, build, parallel review (tech lead + security + QA) and an independent LLM judge.
@@ -102,6 +103,15 @@ cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
 - Some skills reference the author's own projects as worked examples. No third-party client data is included.
 - Third-party skills the author uses but did not write (e.g. `gstack`, `graphify`) are **not** redistributed here — get them from their own authors.
 
+### Validation
+
+Every push and PR runs [`scripts/validate_skills.py`](scripts/validate_skills.py) on Linux, which checks that each skill has a `SKILL.md` (exact case), valid YAML frontmatter, a `name` matching its folder, and a `description` long enough to be triggerable. Run it yourself before opening a PR:
+
+```bash
+pip install pyyaml
+python scripts/validate_skills.py
+```
+
 </details>
 
 ---
@@ -198,5 +208,14 @@ cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
 - Escritas mayormente en **español (es-CO)**, que es el idioma en el que fueron diseñadas para operar. El método se transfiere; la prosa es en español.
 - Algunas skills citan proyectos propios del autor como ejemplos trabajados. No se incluye ningún dato de clientes de terceros.
 - Las skills de terceros que el autor usa pero no escribió (p. ej. `gstack`, `graphify`) **no** se redistribuyen aquí — consíguelas de sus autores.
+
+### Validación
+
+Cada push y cada PR corre [`scripts/validate_skills.py`](scripts/validate_skills.py) sobre Linux, que verifica que cada skill tenga su `SKILL.md` (mayúsculas exactas), frontmatter YAML válido, un `name` que coincida con su carpeta y una `description` lo bastante larga como para poder dispararse. Córrelo tú antes de abrir un PR:
+
+```bash
+pip install pyyaml
+python scripts/validate_skills.py
+```
 
 </details>

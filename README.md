@@ -77,6 +77,14 @@ Copy-Item -Recurse -Force claude-skills\templates\* "$env:USERPROFILE\.claude\te
 cp -r claude-skills/skills/tech-lead-senior ~/.claude/skills/
 ```
 
+**Verify the install actually worked** — from the cloned repo:
+
+```bash
+python scripts/verify_install.py
+```
+
+It compares the repo against `~/.claude/skills`, so it catches a half-finished copy: missing skills, folders copied without their `SKILL.md`, and missing `templates/`. Use `--target` if you installed somewhere else. "I copied them" is not a verification.
+
 **Then restart Claude Code.** Each skill is discovered from its `description` and fires when the task matches it — you do not have to memorize names. You can also ask for one explicitly:
 
 ```
@@ -112,11 +120,16 @@ cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
 
 ### Validation
 
-Every push and PR runs [`scripts/validate_skills.py`](scripts/validate_skills.py) on Linux, which checks that each skill has a `SKILL.md` (exact case), valid YAML frontmatter, a `name` matching its folder, and a `description` long enough to be triggerable. Run it yourself before opening a PR:
+Every push and PR runs two checks on Linux (case-sensitive filesystem, so a lowercase `skill.md` fails there even if it works on Windows):
+
+- [`scripts/validate_skills.py`](scripts/validate_skills.py) — each skill has a `SKILL.md` (exact case), valid YAML frontmatter, a `name` matching its folder, and a `description` long enough to be triggerable.
+- [`scripts/validate_external_refs.py`](scripts/validate_external_refs.py) — every external reference (a command, a `REGLA #N`, a `[[note]]` that lives outside this repo) is explained in [`COMPATIBILIDAD.md`](COMPATIBILIDAD.md). Without this the doc would age silently and the gaps would come back unnoticed.
+
+Run both before opening a PR:
 
 ```bash
 pip install pyyaml
-python scripts/validate_skills.py
+python scripts/validate_skills.py && python scripts/validate_external_refs.py
 ```
 
 </details>
@@ -190,6 +203,14 @@ Copy-Item -Recurse -Force claude-skills\templates\* "$env:USERPROFILE\.claude\te
 cp -r claude-skills/skills/tech-lead-senior ~/.claude/skills/
 ```
 
+**Verifica que la instalación quedó de verdad** — desde el repo clonado:
+
+```bash
+python scripts/verify_install.py
+```
+
+Compara el repo contra `~/.claude/skills`, así que detecta una copia a medias: skills que faltan, carpetas copiadas sin su `SKILL.md`, y `templates/` ausente. Usa `--target` si instalaste en otro sitio. "Ya las copié" no es una verificación.
+
 **Luego reinicia Claude Code.** Cada skill se descubre por su `description` y se dispara sola cuando la tarea coincide — no hay que memorizar nombres. También puedes pedirla explícitamente:
 
 ```
@@ -225,11 +246,16 @@ cd claude-skills && git pull && cp -r skills/* ~/.claude/skills/
 
 ### Validación
 
-Cada push y cada PR corre [`scripts/validate_skills.py`](scripts/validate_skills.py) sobre Linux, que verifica que cada skill tenga su `SKILL.md` (mayúsculas exactas), frontmatter YAML válido, un `name` que coincida con su carpeta y una `description` lo bastante larga como para poder dispararse. Córrelo tú antes de abrir un PR:
+Cada push y cada PR corre dos comprobaciones sobre Linux (filesystem case-sensitive, así que un `skill.md` en minúscula falla ahí aunque funcione en Windows):
+
+- [`scripts/validate_skills.py`](scripts/validate_skills.py) — cada skill tiene su `SKILL.md` (mayúsculas exactas), frontmatter YAML válido, un `name` que coincide con su carpeta y una `description` lo bastante larga como para poder dispararse.
+- [`scripts/validate_external_refs.py`](scripts/validate_external_refs.py) — toda referencia externa (un comando, una `REGLA #N`, una `[[nota]]` que vive fuera de este repo) está explicada en [`COMPATIBILIDAD.md`](COMPATIBILIDAD.md). Sin esto el documento envejecería en silencio y los huecos volverían sin que salte ninguna alarma.
+
+Corre las dos antes de abrir un PR:
 
 ```bash
 pip install pyyaml
-python scripts/validate_skills.py
+python scripts/validate_skills.py && python scripts/validate_external_refs.py
 ```
 
 </details>

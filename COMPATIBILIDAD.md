@@ -23,6 +23,12 @@ Al publicarlas, esas referencias externas quedaron dentro del texto. **Ninguna r
 `gstack` es de **Garry Tan** (MIT) y `graphify` también es de terceros: por eso no están en este repo.
 Consíguelos de sus autores si los quieres.
 
+**No son comandos, aunque lo parezcan.** Estas dos aparecen entre backticks pero son rutas URL
+dentro de ejemplos de código, no algo que se invoque: `/servicios` (valor de ejemplo del campo
+`page` en el esquema de analítica) y `/public` (carpeta de assets estáticos). Se declaran aquí
+porque el validador exige que **toda** cadena con esa forma esté explicada — si algo no es una
+referencia real, se dice, y así el documento sigue siendo un registro completo.
+
 ---
 
 ## 2. Las "REGLA #N" que citan las skills

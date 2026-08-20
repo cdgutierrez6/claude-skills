@@ -1,6 +1,12 @@
 ---
 name: devops-hostinger-senior
-description: Actua como DevOps Senior especializado en Hostinger VPS. Usalo para deploys sin downtime, Docker y docker-compose, Traefik como reverse proxy con TLS, CI/CD con GitHub Actions, backups y operacion de contenedores en un VPS propio. Activalo con: "despliega en el VPS", "configura Traefik", "el contenedor no levanta", "haz el docker-compose", "arma el CI/CD", "necesito backups", "renovar el certificado SSL", o cualquier tarea de infraestructura sobre VPS.
+description: >
+  Actúa como DevOps Senior especializado en Hostinger VPS. Úsalo para deploys sin downtime,
+  Docker y docker-compose, Traefik como reverse proxy con TLS, CI/CD con GitHub Actions,
+  backups y operación de contenedores en un VPS propio. Actívalo con: "despliega en el VPS",
+  "configura Traefik", "el contenedor no levanta", "haz el docker-compose", "arma el CI/CD",
+  "necesito backups", "renovar el certificado SSL", o cualquier tarea de infraestructura
+  sobre un VPS propio.
 ---
 
 # DevOps Hostinger Senior

@@ -45,7 +45,8 @@ SKILL_FILENAME = "SKILL.md"
 def read_frontmatter(path: str) -> tuple[dict | None, str | None]:
     """Devuelve (frontmatter, error). Solo uno de los dos es no-None."""
     try:
-        text = io.open(path, encoding="utf-8").read()
+        with io.open(path, encoding="utf-8") as handle:
+            text = handle.read()
     except OSError as exc:
         return None, "no se pudo leer: %s" % exc
 

@@ -68,17 +68,18 @@ def collect(root: str) -> tuple[dict, set, set]:
         refs.setdefault((kind, value), []).append("%s:%d" % (path.replace(os.sep, "/"), lineno))
 
     for path in iter_markdown(root):
-        for lineno, line in enumerate(io.open(path, encoding="utf-8"), start=1):
-            for match in RX_COMMAND.finditer(line):
-                command = match.group(1)
-                if command.lstrip("/") not in skills:
-                    note("comando", command, path, lineno)
-            for match in RX_RULE.finditer(line):
-                note("regla", match.group(1), path, lineno)
-            for match in RX_WIKILINK.finditer(line):
-                target = match.group(1)
-                if target not in basenames:
-                    note("nota", "[[%s]]" % target, path, lineno)
+        with io.open(path, encoding="utf-8") as handle:
+            for lineno, line in enumerate(handle, start=1):
+                for match in RX_COMMAND.finditer(line):
+                    command = match.group(1)
+                    if command.lstrip("/") not in skills:
+                        note("comando", command, path, lineno)
+                for match in RX_RULE.finditer(line):
+                    note("regla", match.group(1), path, lineno)
+                for match in RX_WIKILINK.finditer(line):
+                    target = match.group(1)
+                    if target not in basenames:
+                        note("nota", "[[%s]]" % target, path, lineno)
 
     return refs, skills, basenames
 
@@ -95,7 +96,8 @@ def main() -> int:
         print("ERROR: falta %s, que es donde se documentan las referencias externas." % DOC)
         return 1
 
-    doc = io.open(DOC, encoding="utf-8").read()
+    with io.open(DOC, encoding="utf-8") as handle:
+        doc = handle.read()
     refs, skills, _ = collect(".")
 
     undocumented = {

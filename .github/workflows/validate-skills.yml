@@ -24,6 +24,12 @@ jobs:
       - name: Instalar PyYAML
         run: pip install --quiet pyyaml
 
+      - name: Tests de los validadores
+        # Van PRIMERO a proposito: si las herramientas estan rotas, que los
+        # pasos siguientes salgan verdes no significa nada. Un validador que
+        # siempre pasa da una confianza que no ha ganado.
+        run: python scripts/test_validators.py
+
       - name: Validar estructura y frontmatter de cada skill
         run: python scripts/validate_skills.py --skills-dir skills
 

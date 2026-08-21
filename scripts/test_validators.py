@@ -343,13 +343,13 @@ class TestNoSecrets(unittest.TestCase):
         self.assertEqual(code, 0, out)
 
     def test_token_con_pinta_de_real_en_json(self):
-        self.skill_con('{ "env": { "API_TOKEN": "ghp_realLookingTokenValue123456" } }')
+        self.skill_con('{ "env": { "API_TOKEN": "ghp_realLookingTokenValue123456" } }')  # secreto-de-prueba
         code, out = self.check()
         self.assertEqual(code, 1)
         self.assertIn("API_TOKEN", out)
 
     def test_clave_dentro_de_una_cadena_de_conexion(self):
-        self.skill_con('conn = "postgresql://usuario:Cl4v3Real2026Larga@host:5432/db"')
+        self.skill_con('conn = "postgresql://usuario:Cl4v3Real2026Larga@host:5432/db"')  # secreto-de-prueba
         code, out = self.check()
         self.assertEqual(code, 1)
         self.assertIn("conexion", out)
@@ -364,6 +364,25 @@ class TestNoSecrets(unittest.TestCase):
         code, out = self.check()
         self.assertEqual(code, 1)
         self.assertIn("API_SECRET", out)
+
+    def test_tambien_mira_dentro_de_scripts(self):
+        # La credencial real acabo en scripts/, no en skills/, cuando la copie
+        # como fixture. Si el validador no se escanea a si mismo, ese es
+        # exactamente el sitio donde vuelve a colarse.
+        write(os.path.join(self.root, "scripts", "algo.py"),
+              "WAHA_KEY=marcainventada2019palabra")
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("scripts/algo.py", out.replace(os.sep, "/"))
+
+    def test_la_marca_de_fixture_declara_la_excepcion(self):
+        # Un fixture necesita una cadena con forma de credencial. La marca lo
+        # declara de forma visible en el diff, en vez de esconder la excepcion
+        # dentro de la logica del validador.
+        write(os.path.join(self.root, "scripts", "test_algo.py"),
+              "WAHA_KEY=marcainventada2019palabra  # secreto-de-prueba")
+        code, out = self.check()
+        self.assertEqual(code, 0, out)
 
     def test_variable_sin_nombre_de_credencial_no_se_mira(self):
         # Solo importan las que denotan credencial; lo demas es ruido.

@@ -15,7 +15,7 @@ n8n Workflow: "AI Lead Processor"
 [Kafka Trigger]          ← topic: crm.leads.captured
     │
     ▼
-[HTTP Request]           → POST https://api.efiziai.com/ai/score-lead
+[HTTP Request]           → POST https://<api-interna>/ai/score-lead
     │                      Body: { lead_id, company, email, niche }
     ▼
 [IF node]                → score >= 70 → "hot lead" branch

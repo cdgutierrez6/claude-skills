@@ -45,7 +45,7 @@ from langchain_postgres import PostgresChatMessageHistory
 import psycopg
 
 # Guardar historial en PostgreSQL
-conn_string = "postgresql://agency_user:password@localhost:5432/b2b_agency"
+conn_string = os.environ["DATABASE_URL"]  # nunca la cadena literal en el codigo
 
 history = PostgresChatMessageHistory(
     table_name="chat_history",

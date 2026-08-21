@@ -122,7 +122,7 @@ STRIPE_PRICE_MONTHLY=price_xxx   # $150 USD/mes
 STRIPE_PRICE_ANNUAL=price_xxx    # $1,500 USD/año
 
 # CRM URL para redirects
-CRM_URL=https://crm.efiziai.com
+CRM_URL=<url-del-crm>
 ```
 
 ---

@@ -34,7 +34,22 @@ import os
 import re
 import sys
 
-SCAN_DIRS = ("skills", "templates")
+# `scripts` esta incluido a proposito: la primera version de este validador NO se
+# escaneaba a si mismo, y la credencial real acabo justamente ahi -- copiada como
+# fixture en el test de regresion. El validador quedaba verde mientras la cadena
+# seguia en el repo publico, solo que en otra carpeta.
+SCAN_DIRS = ("skills", "templates", "scripts")
+
+# Una linea con esta marca se salta. Existe SOLO para los fixtures de los tests,
+# que necesitan un valor con forma de credencial para probar la deteccion. Es
+# visible en el diff de un PR, que es el punto: un hueco explicito y revisable,
+# no una excepcion escondida en la logica.
+MARCA_FIXTURE = "secreto-de-prueba"
+
+# Un valor con estos caracteres es una expresion de codigo, no una credencial:
+# `re.compile(`, `os.environ[...]`, una llamada a funcion. Sin este filtro,
+# escanear `scripts/` marcaria el propio codigo del validador.
+CARACTERES_DE_CODIGO = "()[]{}\"' "
 
 # Nombres que denotan una credencial. Deliberadamente amplio.
 CREDENTIAL_NAME = re.compile(
@@ -65,9 +80,15 @@ PLACEHOLDER_MARKS = (
 
 
 def es_placeholder(value: str) -> bool:
-    """True si el valor es reconociblemente falso."""
+    """True si el valor es reconociblemente falso (o directamente no es un valor)."""
     v = value.strip().strip(",;").strip()
     if not v or v in ('""', "''"):
+        return True
+
+    # Expresion de codigo, no una credencial. Una credencial es un token
+    # contiguo: en cuanto aparece un parentesis, un corchete o un espacio,
+    # estamos mirando codigo (`re.compile(...)`, `os.environ["X"]`).
+    if any(c in v for c in CARACTERES_DE_CODIGO):
         return True
 
     # Interpolaciones: el valor real vive fuera del fichero, que es lo correcto.
@@ -93,6 +114,8 @@ def scan_file(path: str) -> list[tuple[int, str, str]]:
     with io.open(path, encoding="utf-8") as handle:
         for lineno, line in enumerate(handle, start=1):
             if len(line) > 400:      # tablas y bloques largos: no son asignaciones
+                continue
+            if MARCA_FIXTURE in line:  # fixture de test declarado explicitamente
                 continue
 
             for rx in ASSIGNMENTS:
@@ -122,7 +145,7 @@ def main() -> int:
             continue
         for dirpath, _, filenames in os.walk(base):
             for filename in filenames:
-                if not filename.endswith((".md", ".json", ".yml", ".yaml", ".env", ".tmpl")):
+                if not filename.endswith((".md", ".json", ".yml", ".yaml", ".env", ".tmpl", ".py", ".sh", ".js", ".ts")):
                     continue
                 path = os.path.join(dirpath, filename)
                 total += 1

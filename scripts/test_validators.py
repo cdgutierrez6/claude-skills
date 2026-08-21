@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Tests de los tres validadores del repo.
+"""Tests de los validadores del repo.
 
 Por que existe: los validadores son la unica red que impide publicar skills
 rotas, y hasta ahora se habian probado a mano. Un validador que siempre pasa es
@@ -16,6 +16,8 @@ Cada modo de fallo probado aqui salio de un bug real de este repo:
     entera. Lo introdujo el propio arreglo del bug anterior.
   - Referencias externas sin documentar: el hueco que COMPATIBILIDAD.md cierra.
   - Instalacion a medias: carpeta copiada sin su SKILL.md, invisible con `ls`.
+  - Una credencial REAL publicada: `WAHA_KEY=<valor>`. Tres escaneos previos
+    dijeron "0 secretos" porque buscaban patrones conocidos.
 
 Uso:
     python scripts/test_validators.py          # o: python -m unittest discover scripts
@@ -38,6 +40,7 @@ from validate_skills import validate_skill  # noqa: E402
 VALIDATE_REFS = os.path.join(HERE, "validate_external_refs.py")
 VERIFY_INSTALL = os.path.join(HERE, "verify_install.py")
 READ_PARITY = os.path.join(HERE, "validate_readme_parity.py")
+NO_SECRETS = os.path.join(HERE, "validate_no_secrets.py")
 
 # Larga a proposito: supera el minimo de caracteres, para que ningun test falle
 # por un motivo distinto del que esta probando.
@@ -285,6 +288,86 @@ class TestVerifyInstall(unittest.TestCase):
         code, out = self.check()
         self.assertEqual(code, 1)
         self.assertIn("ninguna skill", out)
+
+
+class TestNoSecrets(unittest.TestCase):
+    """Ninguna skill puede documentar el VALOR de una credencial.
+
+    El caso historico: este repo publico contuvo `WAHA_KEY=<valor real>` durante
+    horas, y tres escaneos previos dijeron "0 secretos" porque buscaban patrones
+    conocidos (comillas, prefijos `sk-`/`ghp_`). El validador invierte la carga:
+    el valor debe ser un placeholder RECONOCIBLE o falla.
+    """
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = self.tmp.name
+
+    def tearDown(self) -> None:
+        self.tmp.cleanup()
+
+    def skill_con(self, cuerpo: str) -> None:
+        write(os.path.join(self.root, "skills", "caso", "SKILL.md"),
+              "---\nname: caso\ndescription: %s\n---\n\n%s\n" % (GOOD_DESCRIPTION, cuerpo))
+
+    def check(self):
+        return run(NO_SECRETS, [], self.root)
+
+    def test_el_caso_historico_se_detecta(self):
+        # La regresion exacta que motivo este validador.
+        self.skill_con("WAHA_KEY=efiziai2024secret")
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("WAHA_KEY", out)
+
+    def test_placeholders_habituales_no_se_marcan(self):
+        # Control negativo amplio: si esto falla, el validador es inusable y
+        # acabaria desactivado, que es peor que no tenerlo.
+        self.skill_con(
+            "RESEND_API_KEY=re_xxx\n"
+            "ANTHROPIC_API_KEY=sk-ant-xxx\n"
+            "STRIPE_SECRET_KEY=sk_live_xxx\n"
+            "INTERNAL_API_KEY=<vacio aqui>\n"
+            "JWT_SECRET=${JWT_SECRET}\n"
+            "DB_PASSWORD=\n"
+            "WEBHOOK_SECRET=tu-clave-aqui\n"
+        )
+        code, out = self.check()
+        self.assertEqual(code, 0, out)
+
+    def test_token_con_pinta_de_real_en_json(self):
+        self.skill_con('{ "env": { "API_TOKEN": "ghp_realLookingTokenValue123456" } }')
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("API_TOKEN", out)
+
+    def test_clave_dentro_de_una_cadena_de_conexion(self):
+        self.skill_con('conn = "postgresql://usuario:Cl4v3Real2026Larga@host:5432/db"')
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("conexion", out)
+
+    def test_conexion_con_clave_placeholder_no_se_marca(self):
+        self.skill_con('conn = "postgresql://usuario:password@host:5432/db"')
+        code, out = self.check()
+        self.assertEqual(code, 0, out)
+
+    def test_variable_yaml(self):
+        self.skill_con("env:\n  API_SECRET: valorRealQueNoDeberiaEstarAqui")
+        code, out = self.check()
+        self.assertEqual(code, 1)
+        self.assertIn("API_SECRET", out)
+
+    def test_variable_sin_nombre_de_credencial_no_se_mira(self):
+        # Solo importan las que denotan credencial; lo demas es ruido.
+        self.skill_con("BASE_URL=https://ejemplo-de-un-host-cualquiera.com/api/v1")
+        code, out = self.check()
+        self.assertEqual(code, 0, out)
+
+    def test_comentario_tras_el_valor_no_cuenta_como_valor(self):
+        self.skill_con("WAHA_KEY=<rotar>   # el valor vive en el gestor de secretos")
+        code, out = self.check()
+        self.assertEqual(code, 0, out)
 
 
 class TestReadmeParity(unittest.TestCase):

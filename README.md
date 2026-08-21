@@ -125,13 +125,14 @@ Every push and PR runs these on Linux (case-sensitive filesystem, so a lowercase
 - [`scripts/test_validators.py`](scripts/test_validators.py) — **22 tests of the validators themselves**, run first. Each injects a failure mode taken from a real bug in this repo and demands it be caught, plus control cases that must *not* be flagged. A validator that always passes is worse than no validator.
 - [`scripts/validate_skills.py`](scripts/validate_skills.py) — each skill has a `SKILL.md` (exact case), valid YAML frontmatter, a `name` matching its folder, and a `description` long enough to be triggerable.
 - [`scripts/validate_external_refs.py`](scripts/validate_external_refs.py) — every external reference (a command, a `REGLA #N`, a `[[note]]` that lives outside this repo) is explained in [`COMPATIBILIDAD.md`](COMPATIBILIDAD.md). Without this the doc would age silently and the gaps would come back unnoticed.
+- [`scripts/validate_no_secrets.py`](scripts/validate_no_secrets.py) — no skill documents the **value** of a credential, only its name. It is **default-deny**: the value of any credential-named variable must be a recognizable placeholder (`<...>`, `xxx`, `${VAR}`, empty) or the build fails. It works that way because this repo did publish a real API key, and three earlier scans reported "0 secrets" — they were looking for known patterns (quotes, `sk-`/`ghp_` prefixes) and a bare `NAME=value` slipped under all of them.
 - [`scripts/validate_readme_parity.py`](scripts/validate_readme_parity.py) — the two language halves of this README still say the same thing: same code-block sequence, byte-identical `bash`/`powershell` commands, same links, same section count. Translated prose and mermaid labels are allowed to differ. This one exists because they drifted once already.
 
-Run the same four before opening a PR, in the same order CI does:
+Run the same five before opening a PR, in the same order CI does:
 
 ```bash
 pip install pyyaml
-python scripts/test_validators.py && python scripts/validate_skills.py && python scripts/validate_external_refs.py && python scripts/validate_readme_parity.py
+python scripts/test_validators.py && python scripts/validate_skills.py && python scripts/validate_external_refs.py && python scripts/validate_no_secrets.py && python scripts/validate_readme_parity.py
 ```
 
 </details>
@@ -253,13 +254,14 @@ Cada push y cada PR corre esto sobre Linux (filesystem case-sensitive, así que 
 - [`scripts/test_validators.py`](scripts/test_validators.py) — **22 tests de los propios validadores**, y van primero. Cada uno inyecta un modo de fallo sacado de un bug real de este repo y exige que se detecte, más casos de control que *no* deben marcarse. Un validador que siempre pasa es peor que no tener validador.
 - [`scripts/validate_skills.py`](scripts/validate_skills.py) — cada skill tiene su `SKILL.md` (mayúsculas exactas), frontmatter YAML válido, un `name` que coincide con su carpeta y una `description` lo bastante larga como para poder dispararse.
 - [`scripts/validate_external_refs.py`](scripts/validate_external_refs.py) — toda referencia externa (un comando, una `REGLA #N`, una `[[nota]]` que vive fuera de este repo) está explicada en [`COMPATIBILIDAD.md`](COMPATIBILIDAD.md). Sin esto el documento envejecería en silencio y los huecos volverían sin que salte ninguna alarma.
+- [`scripts/validate_no_secrets.py`](scripts/validate_no_secrets.py) — ninguna skill documenta el **valor** de una credencial, solo su nombre. Es **default-deny**: el valor de toda variable con nombre de credencial debe ser un placeholder reconocible (`<...>`, `xxx`, `${VAR}`, vacío) o el build falla. Funciona así porque este repo llegó a publicar una API key real, y tres escaneos anteriores dijeron "0 secretos" — buscaban patrones conocidos (comillas, prefijos `sk-`/`ghp_`) y una asignación pelada `NOMBRE=valor` pasó por debajo de todos.
 - [`scripts/validate_readme_parity.py`](scripts/validate_readme_parity.py) — las dos mitades de idioma de este README siguen diciendo lo mismo: misma secuencia de bloques, comandos `bash`/`powershell` idénticos carácter a carácter, mismos enlaces, mismo número de secciones. La prosa traducida y las etiquetas de mermaid sí pueden diferir. Existe porque ya derivaron una vez.
 
-Corre las cuatro antes de abrir un PR, en el mismo orden que el CI:
+Corre las cinco antes de abrir un PR, en el mismo orden que el CI:
 
 ```bash
 pip install pyyaml
-python scripts/test_validators.py && python scripts/validate_skills.py && python scripts/validate_external_refs.py && python scripts/validate_readme_parity.py
+python scripts/test_validators.py && python scripts/validate_skills.py && python scripts/validate_external_refs.py && python scripts/validate_no_secrets.py && python scripts/validate_readme_parity.py
 ```
 
 </details>

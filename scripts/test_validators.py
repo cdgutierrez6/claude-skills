@@ -314,8 +314,15 @@ class TestNoSecrets(unittest.TestCase):
         return run(NO_SECRETS, [], self.root)
 
     def test_el_caso_historico_se_detecta(self):
-        # La regresion exacta que motivo este validador.
-        self.skill_con("WAHA_KEY=efiziai2024secret")
+        # La regresion exacta que motivo este validador: una variable con nombre
+        # de credencial asignada a un valor con forma de <palabra><anio><palabra>,
+        # sin comillas y sin ningun prefijo famoso.
+        #
+        # El valor de abajo es INVENTADO a proposito. La primera version de este
+        # test uso el valor real, y asi el test que impide publicar la clave la
+        # publicaba el. Un fixture de credencial se fabrica, nunca se copia de
+        # produccion.
+        self.skill_con("WAHA_KEY=marcaficticia2020palabra")
         code, out = self.check()
         self.assertEqual(code, 1)
         self.assertIn("WAHA_KEY", out)

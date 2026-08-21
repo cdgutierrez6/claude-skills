@@ -39,6 +39,13 @@ jobs:
         # repo se vuelve a encontrar el hueco sin ninguna alarma.
         run: python scripts/validate_external_refs.py
 
+      - name: Ninguna skill puede documentar el valor de una credencial
+        # Este repo publico contuvo una API key real durante horas, y tres
+        # escaneos previos dijeron "0 secretos" porque buscaban patrones
+        # conocidos. El validador invierte la carga: el valor debe ser un
+        # placeholder reconocible, o falla.
+        run: python scripts/validate_no_secrets.py
+
       - name: Los dos idiomas del README deben decir lo mismo
         # El README es bilingue y cada cambio hay que aplicarlo dos veces. Ya
         # derivo una vez: el comando local de validacion se actualizo en un

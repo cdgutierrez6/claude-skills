@@ -1,11 +1,11 @@
 # MCP Server en TypeScript
 
-Ábrelo cuando implementes un MCP server sobre Node.js: setup, servidor completo con tools/resources/prompts (ejemplo EfiziAI CRM) y variante HTTP para producción remota.
+Ábrelo cuando implementes un MCP server sobre Node.js: setup, servidor completo con tools/resources/prompts (ejemplo un CRM) y variante HTTP para producción remota.
 
 ## Contenido
 
 - [Setup](#setup)
-- [Server completo — EfiziAI CRM MCP](#server-completo--efiziai-crm-mcp)
+- [Server completo — CRM MCP](#server-completo--crm-mcp)
 - [MCP Server HTTP (para producción remota)](#mcp-server-http-para-producción-remota)
 
 ---
@@ -17,9 +17,9 @@ npm install @modelcontextprotocol/sdk
 npm install -D typescript @types/node tsx
 ```
 
-## Server completo — EfiziAI CRM MCP
+## Server completo — CRM MCP
 ```typescript
-// efiziai-mcp-server/src/index.ts
+// crm-mcp-server/src/index.ts
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -30,12 +30,12 @@ const { Pool } = pg;
 // Conexión a PostgreSQL
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // postgresql://agency_user:pass@localhost:5432/b2b_agency
+  // postgresql://<usuario>:<clave>@<host>:5432/<basededatos> — desde el entorno, nunca hardcodeada
 });
 
 // Crear el server MCP
 const server = new McpServer({
-  name: "efiziai-crm",
+  name: "crm-mcp",
   version: "1.0.0",
 });
 
@@ -45,7 +45,7 @@ const server = new McpServer({
 
 server.tool(
   "search_leads",
-  "Busca leads en el CRM EfiziAI por nombre, email o empresa",
+  "Busca leads en el CRM el CRM por nombre, email o empresa",
   {
     query: z.string().describe("Término de búsqueda"),
     limit: z.number().optional().default(10).describe("Máximo resultados"),
@@ -198,7 +198,7 @@ server.prompt(
           role: "user",
           content: {
             type: "text",
-            text: `Analiza este lead del CRM EfiziAI y dame:
+            text: `Analiza este lead del CRM el CRM y dame:
 1. Score del 1-100 con justificación
 2. Tier: hot / warm / cold
 3. Próxima acción recomendada
@@ -220,7 +220,7 @@ ${JSON.stringify(lead, null, 2)}`,
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("EfiziAI CRM MCP Server running on stdio");
+  console.error("CRM MCP Server running on stdio");
 }
 
 main().catch(console.error);
@@ -236,7 +236,7 @@ import express from "express";
 const app = express();
 app.use(express.json());
 
-const server = new McpServer({ name: "efiziai-remote", version: "1.0.0" });
+const server = new McpServer({ name: "crm-remote", version: "1.0.0" });
 
 // Registrar tools igual que antes...
 

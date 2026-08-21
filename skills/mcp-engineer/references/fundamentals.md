@@ -22,6 +22,6 @@ sistemas externos de manera estandarizada. Piénsalo como "USB para AI":
               │                 │                  │
         ┌─────▼────┐     ┌──────▼───┐    ┌─────────▼──┐
         │MCP Server│     │MCP Server│    │ MCP Server │
-        │(Postgres)│     │(EfiziAI) │    │  (n8n)     │
+        │(Postgres)│     │(CRM)     │    │  (n8n)     │
         └──────────┘     └──────────┘    └────────────┘
 ```

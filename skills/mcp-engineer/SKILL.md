@@ -78,11 +78,11 @@ Statements concisos; código y checklist completo en `references/seguridad-testi
 
 | Server | Tools principales | Transport | Prioridad |
 |---|---|---|---|
-| `efiziai-crm` | search_leads, create_note, get_stats | stdio (dev), HTTP (prod) | **Alta** |
+| `crm-mcp` | search_leads, create_note, get_stats | stdio (dev), HTTP (prod) | **Alta** |
 | `rag-assistant` | query_docs, index_document, get_sources | stdio | **Alta** |
 | `n8n-workflows` | list_workflows, trigger_workflow, get_execution | HTTP | Media |
 | `postgres-admin` | run_query, list_tables, explain_query | stdio (solo local) | Media |
-| `fleetvision-telemetry` | get_vehicle_status, query_metrics | HTTP | Futura |
+| `fleet-telemetry` | get_vehicle_status, query_metrics | HTTP | Futura |
 
 ---
 
@@ -93,7 +93,7 @@ Cargar bajo demanda, no todo de una:
 | Archivo | Ábrelo cuando… |
 |---|---|
 | `references/fundamentals.md` | Necesitas el modelo mental: qué es MCP y el diagrama Host / Client / Server. |
-| `references/servers-typescript.md` | Implementas el server en Node.js: setup, servidor completo con tools/resources/prompts (EfiziAI CRM) y variante HTTP Streamable para producción. |
+| `references/servers-typescript.md` | Implementas el server en Node.js: setup, servidor completo con tools/resources/prompts (un CRM) y variante HTTP Streamable para producción. |
 | `references/servers-python.md` | Implementas el server con Python (FastMCP): tools y resources sobre PostgreSQL con `asyncpg`. |
 | `references/integracion.md` | Conectas el server a un cliente: registro en Claude Code (`settings.json`) y consumo desde n8n vía HTTP. |
 | `references/seguridad-testing.md` | Endureces el server: código de los patrones de seguridad, testing (MCP Inspector + Jest) y el checklist completo de producción. |

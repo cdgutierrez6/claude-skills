@@ -63,11 +63,11 @@ npx @modelcontextprotocol/inspector node dist/index.js
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 
-describe("EfiziAI MCP Server", () => {
+describe("CRM MCP Server", () => {
   let server: McpServer;
 
   beforeEach(async () => {
-    server = createEfiziaiServer(); // función que construye el server
+    server = createCrmServer(); // función que construye el server
     const [serverTransport, clientTransport] = InMemoryTransport.createLinkedPair();
     await server.connect(serverTransport);
   });

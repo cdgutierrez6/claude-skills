@@ -3,12 +3,12 @@
 Ábrelo cuando implementes el MCP server con Python (FastMCP): tools y resources sobre PostgreSQL con `asyncpg`.
 
 ```python
-# efiziai_mcp/server.py
+# crm_mcp/server.py
 from mcp.server.fastmcp import FastMCP
 import asyncpg
 import os
 
-mcp = FastMCP("efiziai-crm-python")
+mcp = FastMCP("crm-mcp-python")
 
 # Pool de conexiones
 async def get_db():
@@ -16,7 +16,7 @@ async def get_db():
 
 @mcp.tool()
 async def search_leads(query: str, limit: int = 10) -> str:
-    """Busca leads en la base de datos EfiziAI por nombre o email."""
+    """Busca leads en la base de datos el CRM por nombre o email."""
     conn = await get_db()
     try:
         rows = await conn.fetch(

@@ -3,7 +3,7 @@
 ```json
 {
   "info": {
-    "name": "EfiziAI CRM API",
+    "name": "CRM API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {

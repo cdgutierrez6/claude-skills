@@ -53,7 +53,7 @@ Snippets de cada regla, tabla de reducción de costos y la checklist pre-deploy 
 
 ```
 Claude API → FastAPI (rag-ai-assistant)    → streaming + tool use
-Claude API → Node.js/Express (EfiziAI CRM) → análisis de leads, respuestas IA
+Claude API → Node.js/Express (el CRM) → análisis de leads, respuestas IA
 Claude API → n8n (root-n8n-1)              → nodos HTTP Request con tool use manual
 Claude API → Python scripts                → batch processing, embeddings, análisis
 pgvector   ← embeddings de Claude         → RAG local con PostgreSQL

@@ -92,6 +92,6 @@ Versioning: [Semantic Versioning](https://semver.org)
 ## [1.1.0] - 2026-05-20
 ...
 
-[Unreleased]: https://github.com/cdgutierrez6/fleetvision/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/cdgutierrez6/fleetvision/compare/v1.1.0...v1.2.0
+[Unreleased]: https://github.com/<owner>/<repo>/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/<owner>/<repo>/compare/v1.1.0...v1.2.0
 ```

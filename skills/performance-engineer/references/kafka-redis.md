@@ -1,8 +1,8 @@
 # Kafka & Redis Performance
 
-Leer cuando haya que diagnosticar consumer lag / throughput de Kafka (FleetVision), tunear producer/consumer, o analizar memoria, hot keys y estrategia de caché/TTL en Redis.
+Leer cuando haya que diagnosticar consumer lag / throughput de Kafka (Telemetria), tunear producer/consumer, o analizar memoria, hot keys y estrategia de caché/TTL en Redis.
 
-## Kafka Performance (FleetVision)
+## Kafka Performance (Telemetria)
 
 ```bash
 # Consumer lag — métrica crítica de salud
@@ -42,7 +42,7 @@ redis-cli -a $REDIS_PASSWORD info stats     # Hit rate
 redis-cli -a $REDIS_PASSWORD --latency-history
 ```
 
-**TTL strategy para EfiziAI/FleetVision:**
+**TTL strategy — ejemplo:**
 ```
 Cache-aside pattern (read-through):
   1. GET de Redis

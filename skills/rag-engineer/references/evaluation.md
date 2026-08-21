@@ -9,7 +9,7 @@ from datasets import Dataset
 
 # Dataset de evaluación
 eval_data = {
-    "question": ["¿Qué es EfiziAI?", "¿Cómo funciona el scoring de leads?"],
+    "question": ["¿Qué es el producto?", "¿Cómo funciona el scoring de leads?"],
     "answer": [actual_answers...],       # respuestas generadas por tu RAG
     "contexts": [retrieved_contexts...], # chunks usados para cada respuesta
     "ground_truth": [correct_answers...] # respuestas correctas (ground truth manual)

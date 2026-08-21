@@ -1,27 +1,27 @@
 # OpenAPI 3.1 y Docstrings — Templates por stack
 
 ## Contenido
-- [OpenAPI 3.1 — Node.js/Express (EfiziAI CRM)](#openapi-31--nodejsexpress-efiziai-crm)
-- [.NET 8 con XML Docs (FleetVision)](#net-8-con-xml-docs-fleetvision)
+- [OpenAPI 3.1 — Node.js/Express (CRM B2B)](#openapi-31--nodejsexpress-crm-b2b)
+- [.NET 8 con XML Docs (microservicios .NET)](#net-8-con-xml-docs-microservicios-net)
 - [JSDoc / TSDoc para TypeScript/Angular](#jsdoc--tsdoc-para-typescriptangular)
 
-> Los ejemplos "EfiziAI CRM API" son ilustrativos (ese CRM está archivado).
+> Los ejemplos "CRM API" son ilustrativos (ese CRM está archivado).
 
 ---
 
-## OpenAPI 3.1 — Node.js/Express (EfiziAI CRM)
+## OpenAPI 3.1 — Node.js/Express (CRM B2B)
 
 ```yaml
 openapi: "3.1.0"
 info:
-  title: EfiziAI CRM API
+  title: CRM API
   version: "1.0.0"
   description: |
     B2B CRM API para gestión de leads, tenants y automatizaciones.
     Todos los endpoints requieren autenticación JWT excepto /auth/*.
   contact:
     name: Cristian Gutierrez
-    email: efiziai.notificaciones@gmail.com
+    email: notificaciones@ejemplo.com
 
 servers:
   - url: https://<api>/v1
@@ -149,7 +149,7 @@ paths:
 
 ---
 
-## .NET 8 con XML Docs (FleetVision)
+## .NET 8 con XML Docs (microservicios .NET)
 
 ```csharp
 /// <summary>

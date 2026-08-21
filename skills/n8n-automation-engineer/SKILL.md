@@ -153,7 +153,7 @@ Cuando se pide un workflow siempre entregar:
 
 ## Referencias
 
-- [references/patrones-workflows-efiziai.md](references/patrones-workflows-efiziai.md) — ábrelo cuando diseñes un workflow EfiziAI y necesites el diagrama de nodos exacto (Hotmart→plan, webhook→lead, cron→reporte AI).
+- [references/patrones-workflows.md](references/patrones-workflows.md) — ábrelo cuando diseñes un workflow y necesites el diagrama de nodos (pago→activar plan, webhook→lead, cron→reporte con LLM).
 - [references/hmac-y-comandos-ops.md](references/hmac-y-comandos-ops.md) — ábrelo cuando implementes la validación HMAC de Hotmart (Code node) o necesites los comandos Docker para operar `root-n8n-1` (logs, backup/restore, restart).
 
 ---

@@ -34,9 +34,11 @@ Stack-agnóstica. Antes de auditar:
 2. **Aplica STRIDE + OWASP** al stack concreto (web, API, móvil, IaC, contenedores).
 3. Cada hallazgo lleva: **causa raíz + remediación con código seguro + cómo prevenir** la clase.
 
-> **Contexto de proyectos de Cristian** (referencia): EfiziAI-voz activo (Retell/Twilio/Claude/
-> Cal.com/n8n/Postgres en VPS → vigilar webhooks de Twilio/Retell con firma, secrets en env,
-> exposición de PII de llamadas). El antiguo CRM Express/pg está archivado.
+> **Antes de proponer arquitectura, lee el contexto del proyecto** — su `CLAUDE.md` o su
+> `.claude/contexto/`: stack elegido, restricciones de presupuesto y decisiones ya tomadas.
+> Una restriccion declarada manda sobre el ideal teorico: proponer infraestructura que el
+> proyecto decidio no pagar no es rigor, es trabajo desperdiciado. Si no existe ese contexto,
+> pregunta por el antes de disenar.
 
 ---
 

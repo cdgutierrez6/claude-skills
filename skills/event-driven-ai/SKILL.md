@@ -46,17 +46,21 @@ El AI procesa en **background**, nunca bloquea la request del usuario (síncrono
 6. **Event store append-only** como fuente de verdad; CQRS separa el write model (commands→eventos inmutables) del read model (proyecciones con outputs AI). (`references/patrones.md`)
 7. **Observabilidad por evento.** Tracing OTel con span por evento: tipo, `aggregate_id`, modelo, `duration_ms`, éxito/error. (`references/integracion-observabilidad.md`)
 
-## Contexto de Cristian — EfiziAI
+## Antes de disenar: el contexto del proyecto
 
-Arquitectura de referencia: EfiziAI CRM (Node.js + Express + React) produce eventos a Kafka
-KRaft; workers Python (Lead Scorer/Responder/Summarizer con Claude Haiku/Sonnet) consumen,
-puntúan y publican a output topics; un **n8n Projection Worker** actualiza PostgreSQL y
-notifica. n8n es la capa de orquestación/notificación (Slack/email). Diagrama completo y el
-workflow n8n "AI Lead Processor" → `references/integracion-observabilidad.md`.
+Un sistema event-driven se disena contra restricciones reales, no contra el diagrama ideal. Antes
+de proponer un broker, un event store o un orquestador, lee el `CLAUDE.md` o el
+`.claude/contexto/` del proyecto: puede haber una decision explicita de **no** pagar
+infraestructura gestionada, y entonces la respuesta correcta es la version que corre en lo que ya
+existe.
+
+Si el proyecto ya tiene una arquitectura de referencia escrita, esa manda. Si contradice una
+restriccion declarada en otro sitio, **no elijas por tu cuenta**: senala la contradiccion y pide
+que se resuelva antes de construir encima.
 
 ## Referencias
 
 - **`references/fundamentos.md`** — léela para justificar EDA vs REST y clasificar eventos (tabla síncrono-vs-eventos + taxonomía Domain/Command/Query/AIOutput/Error).
 - **`references/patrones.md`** — léela al implementar: consumer Kafka AI (Python) completo, CQRS + Event Store en PostgreSQL (DDL), y Saga multi-agente con compensación.
 - **`references/resiliencia.md`** — léela al endurecer para producción: handler de DLQ con fallback de modelo y circuit breaker decorador para Claude API.
-- **`references/integracion-observabilidad.md`** — léela para integrar/operar: workflow n8n, tracing OpenTelemetry por evento y la arquitectura de referencia EfiziAI.
+- **`references/integracion-observabilidad.md`** — léela para integrar/operar: workflow n8n, tracing OpenTelemetry por evento y la arquitectura de referencia.

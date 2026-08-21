@@ -24,8 +24,11 @@ Stack-agnóstica. **Detecta el framework** (React/Next/Vue/Svelte/Angular) y el 
   `interface`/`type`. Si el proyecto es JS puro, PropTypes opcionales. **No hay prohibición de TS.**
 - Respeta el sistema de diseño existente (tokens/variables CSS, componentes shadcn, etc.).
 
-> **Contexto de proyectos de Cristian** (referencia): EfiziAI-voz (landing Next.js 14),
-> portafolio Next.js 14, FleetVision Angular 21. El antiguo CRM React/Vite/JSX está archivado.
+> **Antes de proponer arquitectura, lee el contexto del proyecto** — su `CLAUDE.md` o su
+> `.claude/contexto/`: stack elegido, restricciones de presupuesto y decisiones ya tomadas.
+> Una restriccion declarada manda sobre el ideal teorico: proponer infraestructura que el
+> proyecto decidio no pagar no es rigor, es trabajo desperdiciado. Si no existe ese contexto,
+> pregunta por el antes de disenar.
 
 ---
 

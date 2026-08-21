@@ -1,8 +1,8 @@
 # Analytics SQL Avanzado
 
-Window functions, CTEs, materialized views y patrones OLAP. Ejemplos ilustrativos sobre EfiziAI CRM — adaptar al schema real del proyecto.
+Window functions, CTEs, materialized views y patrones OLAP. Ejemplos ilustrativos sobre el CRM — adaptar al schema real del proyecto.
 
-## Patrones Window Functions para SaaS (EfiziAI)
+## Patrones Window Functions para SaaS
 
 ```sql
 -- MRR por mes con tendencia
@@ -45,7 +45,7 @@ LEFT JOIN churned ch ON c.tenant_id = ch.tenant_id
 GROUP BY 1
 ORDER BY 1;
 
--- Lead conversion funnel (EfiziAI CRM)
+-- Lead conversion funnel (CRM B2B)
 SELECT
   stage,
   COUNT(*) AS count,

@@ -42,7 +42,7 @@ search = DuckDuckGoSearchRun()
 
 @tool
 def search_crm_database(query: str) -> str:
-    """Busca información de clientes en la base de datos del CRM EfiziAI.
+    """Busca información de clientes en la base de datos del CRM.
     Args:
         query: término de búsqueda (nombre, email, empresa)
     """
@@ -67,7 +67,7 @@ tools = [search_crm_database, send_whatsapp_message, search]
 
 # Prompt del agente
 prompt = ChatPromptTemplate.from_messages([
-    ("system", """Eres un asistente AI del CRM EfiziAI. Tienes acceso a herramientas
+    ("system", """Eres un asistente AI de un CRM. Tienes acceso a herramientas
 para consultar la base de datos de clientes y enviar mensajes de WhatsApp.
 Piensa paso a paso antes de actuar. Si no estás seguro, pregunta.
 Fecha actual: {date}"""),

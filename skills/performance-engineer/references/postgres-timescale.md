@@ -1,11 +1,11 @@
 # Optimización PostgreSQL / TimescaleDB
 
-Leer cuando haya que optimizar queries, leer un `EXPLAIN`, diagnosticar índices faltantes, o tunear hypertables de TimescaleDB (FleetVision).
+Leer cuando haya que optimizar queries, leer un `EXPLAIN`, diagnosticar índices faltantes, o tunear hypertables de TimescaleDB (Telemetria).
 
 ## Contenido
 - Diagnóstico inicial (queries lentas, índices no usados, seq scans, tamaños)
 - EXPLAIN ANALYZE — cómo leerlo + red flags
-- TimescaleDB específico (FleetVision): compresión, continuous aggregates, retention, chunks
+- TimescaleDB específico (Telemetria): compresión, continuous aggregates, retention, chunks
 
 ## Diagnóstico inicial
 
@@ -53,7 +53,7 @@ GROUP BY v.id, v.plate;
 - `Sort` sin índice → agregar índice en columna de ORDER BY
 - `Buffers: shared hit=0 read=...` → datos no en caché → tabla muy grande o índice faltante
 
-## TimescaleDB específico (FleetVision)
+## TimescaleDB específico (Telemetria)
 
 ```sql
 -- Verificar compresión de chunks

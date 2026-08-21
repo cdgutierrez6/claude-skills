@@ -379,7 +379,7 @@ Si no tienes ninguna de las dos, **no implementes esto**. Es la respuesta honest
 /* Transición COMPARTIDA: el mismo nombre en las dos rutas → el navegador interpola. */
 .project-card-media  { view-transition-name: var(--vt-name); }   /* grilla */
 .project-hero-media  { view-transition-name: var(--vt-name); }   /* detalle */
-/* --vt-name: p-fleetvision  ← único por proyecto; DOS elementos con el mismo nombre a la vez
+/* --vt-name: p-telemetria  ← único por proyecto; DOS elementos con el mismo nombre a la vez
    en el MISMO snapshot = la transición se aborta entera y sin avisar. */
 
 @media (prefers-reduced-motion: reduce) {

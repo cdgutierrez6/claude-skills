@@ -1,6 +1,6 @@
 # Observabilidad — Instrumentación + Kafka Analytics
 
-Métricas custom (OpenTelemetry/Prometheus), dashboards Grafana y monitoreo de Kafka. Ejemplos ilustrativos sobre FleetVision — adaptar al stack real.
+Métricas custom (OpenTelemetry/Prometheus), dashboards Grafana y monitoreo de Kafka. Ejemplos ilustrativos sobre Telemetria — adaptar al stack real.
 
 ## Contenido
 
@@ -21,7 +21,7 @@ public class TelemetryMetrics
 
     public TelemetryMetrics(IMeterFactory meterFactory)
     {
-        var meter = meterFactory.Create("FleetVision.Telemetry");
+        var meter = meterFactory.Create("Telemetria.Metrics");
         _positionsIngested = meter.CreateCounter<long>(
             "fleet.positions.ingested.total",
             description: "Total GPS positions ingested");

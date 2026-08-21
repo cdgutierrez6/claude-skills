@@ -11,7 +11,7 @@ import os
 # Configurar LangSmith (tracing automático)
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = "ls__..."  # En .env
-os.environ["LANGCHAIN_PROJECT"] = "efiziai-ai-agents"
+os.environ["LANGCHAIN_PROJECT"] = "mis-agentes"
 
 # Todo lo que ejecutes con LangChain ahora queda traced en LangSmith
 # Incluye: inputs, outputs, latencia, tokens, tool calls, errores

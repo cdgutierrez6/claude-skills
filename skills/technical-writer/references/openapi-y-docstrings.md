@@ -21,10 +21,10 @@ info:
     Todos los endpoints requieren autenticación JWT excepto /auth/*.
   contact:
     name: Cristian Gutierrez
-    email: notificaciones@ejemplo.com
+    email: efiziai.notificaciones@gmail.com
 
 servers:
-  - url: https://api.efiziai.com/v1
+  - url: https://<api>/v1
     description: Production
   - url: http://localhost:3001/v1
     description: Development

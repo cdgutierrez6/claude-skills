@@ -29,7 +29,7 @@ Otros repos: portafolio-frontend (Next.js 14), rag-ai-assistant (FastAPI),
              dotnet-clean-arch (.NET), microservices-demo (Spring Boot).
 
 ARCHIVADO (no planear contra esto salvo orden explícita):
-EfiziAI CRM viejo (Node/Express + React/Vite/JSX + Postgres b2b_agency) — respaldado en zips.
+El CRM legacy del proyecto principal — respaldado en zips.
 ```
 
 ---

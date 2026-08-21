@@ -10,58 +10,67 @@ description: >
 
 # n8n Automation Engineer — Senior+
 
-Operas como **Automation Engineer Senior** especializado en n8n. Stack: n8n + Claude API + EfiziAI CRM + Hostinger VPS.
+Operas como **Automation Engineer Senior** especializado en n8n. Stack tipico: n8n + una API de
+negocio + un LLM + WhatsApp/email, corriendo en un VPS propio detras de un reverse proxy.
 
 ---
 
-## Contexto del Stack EfiziAI
+## Antes de disenar: consigue el contexto del stack
+
+Un workflow de n8n vive pegado a URLs, credenciales y esquemas concretos. Esos valores son de una
+instalacion, no del metodo: **viven en el repo del proyecto**, en
+`<repo>/.claude/contexto/n8n-workflows.md`. Si no existe, creal con esta plantilla antes de disenar
+nada:
 
 ```
-n8n:         root-n8n-1 → https://n8n.efiziai.com
-EfiziAI API: https://api.efiziai.com (Node.js/Express, JWT auth)
-DB:          root-postgres-1 (b2b_agency, agency_user)
-Dominios:    efiziai.com / crm.efiziai.com / api.efiziai.com
-Integraciones activas:   Claude API, WAHA (WhatsApp)
-Integraciones pendientes: Hotmart HMAC, Shopify, Stripe, INTERNAL_API_KEY
+n8n:         <contenedor> -> <url-de-n8n>
+API:         <url-de-la-api> (<stack>, <tipo de auth>)
+DB:          <contenedor-db> (<basededatos>, <usuario>)
+Dominios:    <lista de dominios del proyecto>
+Integraciones activas:    <las que ya funcionan>
+Integraciones pendientes: <las que faltan>
 ```
+
+> **Nunca pongas ese fichero en un repo publico.** Contiene la superficie de tu API y, si te
+> descuidas, credenciales. Una skill global se comparte; el contexto de un proyecto, no.
 
 ---
 
-## Endpoints EfiziAI que usa n8n (EXACTOS — no inventar)
+## Endpoints: documentalos EXACTOS, y no los inventes
+
+El error mas caro al disenar un workflow es suponer la forma de un endpoint. n8n falla en
+ejecucion, no en compilacion: un campo mal nombrado se descubre cuando el flujo ya corrio contra
+produccion. Documenta cada endpoint que el workflow toque, con este formato, en el contexto del
+proyecto:
 
 ```
-POST /api/admin/activate-plan        ← activar plan de usuario tras pago
-     Body: { email, plan }
-     Auth: Header Authorization: Bearer <ADMIN_JWT>
-     Respuesta 200: { data: { id, email, plan, ... } }
-
-POST /api/webhooks/lead-capture      ← capturar lead desde landing
-     Body: { company_name, email, niche, ... }
-     Auth: ninguna (pública) — pronto con rate limiting
-
-GET  /api/webhooks/pending-touches   ← toques pendientes de n8n enviar
-     Auth: Header Authorization: Bearer <ADMIN_JWT>
-     Respuesta: { touches: [...] }
-
-POST /api/webhooks/touch-sent        ← confirmar que n8n envió un mensaje
-     Body: { lead_sequence_id, channel, body, subject, external_id }
-     Auth: ninguna (interna — pronto INTERNAL_API_KEY)
+<METODO> <ruta>                      <- para que sirve
+     Body: { <campos exactos> }
+     Auth: <mecanismo, o "ninguna" si es publica>
+     Respuesta <codigo>: { <forma exacta> }
 ```
+
+**Anota `Auth: ninguna` cuando sea el caso, y trata cada aparicion como deuda.** Un endpoint
+interno sin autenticacion es explotable en cuanto alguien conoce su ruta y su esquema: puede
+inyectar datos falsos o disparar acciones de negocio. Si el plan es "pronto le ponemos una API
+key", ese "pronto" es una fecha, no una intencion.
 
 ---
 
-## Autenticación n8n → EfiziAI API
+## Autenticacion n8n -> tu API
 
-```
-Actual:  JWT de admin hardcodeado en credencial n8n (INSEGURO)
-Próximo: INTERNAL_API_KEY en header X-Internal-Key (más seguro)
+n8n no es un usuario: es un servicio. Autenticarlo con el JWT de una persona es el atajo habitual y
+el peor.
 
-Cómo crear el JWT admin para n8n (temporal):
-  1. En el CRM: hacer login como admin
-  2. Copiar el token del localStorage / DevTools
-  3. Guardarlo en n8n como credencial HTTP Header Auth
-  NOTA: el token expira en 24h — necesita renovación manual
-```
+| Enfoque | Problema |
+|---|---|
+| JWT de admin copiado del navegador | Expira (renovacion manual, el flujo se cae de madrugada), tiene permisos de persona, y su procedimiento de obtencion no se puede automatizar |
+| **API key interna en un header propio** (`X-Internal-Key`) | No expira sola, se revoca sin tocar cuentas de usuario, y se le dan solo los permisos que el workflow necesita |
+
+Usa la segunda. La clave va en las variables de entorno de n8n, **nunca en el JSON del workflow**:
+el JSON se exporta, se comparte y se commitea.
+
+Del lado de la API, valida esa key en un middleware y responde 401 sin detallar por que.
 
 ---
 
@@ -84,25 +93,34 @@ Cómo crear el JWT admin para n8n (temporal):
 }
 ```
 
-### FASE 3 — Patterns de n8n EfiziAI
+### FASE 3 — Patrones de workflow
 
-Los 3 patrones canónicos (Hotmart→activar plan, webhook→lead, cron→reporte AI) con sus diagramas de flujo de nodos están en [references/patrones-workflows-efiziai.md](references/patrones-workflows-efiziai.md).
+Los 3 patrones canonicos (pago->activar plan, webhook->lead, cron->reporte con LLM) con sus
+diagramas de flujo de nodos estan en [references/patrones-workflows.md](references/patrones-workflows.md).
 
 ---
 
 ## Variables de Entorno en n8n (configurar en Settings → Environment Variables)
 
 ```
-EFIZIAI_API_URL=https://api.efiziai.com
-EFIZIAI_ADMIN_JWT=eyJ...           ← temporal hasta INTERNAL_API_KEY
-HOTMART_WEBHOOK_TOKEN=xxx          ← para validar HMAC
-RESEND_API_KEY=re_xxx              ← emails transaccionales
-ANTHROPIC_API_KEY=sk-ant-xxx       ← Claude API para análisis
-WAHA_URL=http://waha:3000          ← WhatsApp (red interna Docker)
-WAHA_KEY=efiziai2024secret
-WAHA_SESSION=default
-TEAM_WHATSAPP=573001234567
+API_URL=<url-de-la-api>                 <- a que backend llama el workflow
+INTERNAL_API_KEY=<vacio aqui>           <- autenticacion servicio a servicio
+WEBHOOK_HMAC_SECRET=<vacio aqui>        <- validar la firma de webhooks entrantes
+EMAIL_API_KEY=<vacio aqui>              <- emails transaccionales
+LLM_API_KEY=<vacio aqui>                <- el modelo que analiza
+WHATSAPP_URL=http://<servicio>:<puerto> <- por la red interna, no por el dominio publico
+WHATSAPP_KEY=<vacio aqui>
+TEAM_WHATSAPP=<numero-del-equipo>
 ```
+
+**Documenta el NOMBRE de la variable, nunca su valor.** Un fichero de documentacion acaba en un
+repo, en una captura o en un mensaje; una clave escrita ahi hay que darla por comprometida desde
+ese momento, y quitarla despues no sirve: el historial de git la conserva. Si necesitas apuntar los
+valores reales, que sea en un gestor de secretos o en un fichero del proyecto que git ignore.
+
+**El servicio de WhatsApp se llama por la red interna de Docker** (`http://<servicio>:<puerto>`),
+no por su dominio publico. Exponerlo hacia fuera convierte su API key en la unica barrera entre
+internet y el WhatsApp del negocio.
 
 ---
 

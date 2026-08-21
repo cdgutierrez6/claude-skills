@@ -58,7 +58,7 @@ def send_whatsapp_message(phone: str, message: str) -> str:
     """
     import httpx
     response = httpx.post(
-        "https://waha.efiziai.com/api/sendText",
+        f"{os.environ['WHATSAPP_URL']}/api/sendText",
         json={"chatId": f"{phone}@c.us", "text": message, "session": "default"}
     )
     return "Enviado" if response.status_code == 200 else f"Error: {response.text}"

@@ -6,10 +6,10 @@
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /src
-COPY ["src/FleetVision.Identity.API/FleetVision.Identity.API.csproj", "src/FleetVision.Identity.API/"]
-RUN dotnet restore "src/FleetVision.Identity.API/FleetVision.Identity.API.csproj"
+COPY ["src/Telemetria.Identity.API/Telemetria.Identity.API.csproj", "src/Telemetria.Identity.API/"]
+RUN dotnet restore "src/Telemetria.Identity.API/Telemetria.Identity.API.csproj"
 COPY . .
-RUN dotnet publish "src/FleetVision.Identity.API" -c Release -o /app/publish \
+RUN dotnet publish "src/Telemetria.Identity.API" -c Release -o /app/publish \
     --no-restore \
     /p:UseAppHost=false \
     /p:PublishTrimmed=false
@@ -22,7 +22,7 @@ USER appuser
 COPY --from=build /app/publish .
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
-ENTRYPOINT ["dotnet", "FleetVision.Identity.API.dll"]
+ENTRYPOINT ["dotnet", "Telemetria.Identity.API.dll"]
 ```
 
 ## Template Node.js optimizado

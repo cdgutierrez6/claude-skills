@@ -48,7 +48,7 @@ strategy:
 ```yaml
 environment:
   name: production
-  url: https://app.fleetvision.io
+  url: https://app.ejemplo.io
 ```
 
 **Reusable workflows para DRY:**

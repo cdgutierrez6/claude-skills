@@ -17,7 +17,7 @@ npx source-map-explorer dist/mfe-fleet/main.*.js
 - [ ] `ChangeDetectionStrategy.OnPush` en TODOS los componentes
 - [ ] `trackBy` en todos los `@for`
 - [ ] `@defer` para componentes below-the-fold
-- [ ] Lazy loading de MFEs (ya implementado en FleetVision)
+- [ ] Lazy loading de MFEs (ya implementado en Telemetria)
 - [ ] `takeUntilDestroyed()` en subscriptions (evita leaks)
 - [ ] `preconnect` en `index.html` para APIs externas
 - [ ] Bundle size budget en `angular.json`

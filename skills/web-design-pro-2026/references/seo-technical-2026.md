@@ -208,7 +208,7 @@ En Next.js: `alternates.canonical`. En Angular: `<link rel="canonical">` server-
 
 ### 2.4 hreflang — reciprocidad bidireccional o no funciona
 
-Relevante para EfiziAI/Volanta/VIVO si sirven varios idiomas o países LATAM.
+Relevante si el sitio sirve varios idiomas o países LATAM.
 
 Reglas canónicas (Google localized-versions docs):
 
@@ -224,11 +224,11 @@ Entrega vía `<link>` en `<head>`, sitemap, o header HTTP. En Next.js:
 ```tsx
 export const metadata = {
   alternates: {
-    canonical: "https://volanta.com/co",
+    canonical: "https://ejemplo.com/co",
     languages: {
-      "es-CO": "https://volanta.com/co",
-      "es-MX": "https://volanta.com/mx",
-      "x-default": "https://volanta.com",
+      "es-CO": "https://ejemplo.com/co",
+      "es-MX": "https://ejemplo.com/mx",
+      "x-default": "https://ejemplo.com",
     },
   },
 };

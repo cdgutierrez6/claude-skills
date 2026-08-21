@@ -22,9 +22,9 @@ metadata:
 > obligatorio** para cualquier página. Si te piden una web y NO estás aplicando esto,
 > estás incumpliendo. No entregar páginas estáticas planas — **jamás por defecto.**
 
-Validada con el primer caso real: **MERIDIANO** (café) → aprobada ("súper genial, me
-encanta") y desplegada: `github.com/cdgutierrez6/meridiano-cafe` ·
-`meridiano-cafe-six.vercel.app`. La receta de abajo es la que él aprobó.
+Validada con el primer caso real: **una landing de café** → aprobada ("súper genial, me
+encanta") y desplegada: 
+una landing desplegada en Vercel. La receta de abajo es la que él aprobó.
 
 ---
 
@@ -93,7 +93,7 @@ ceremonia extra; el Discovery de 5 líneas ES la ceremonia mínima.)
 - Versiones de referencia: **GSAP 3.14.x · Lenis 1.3.x · Three r165+**.
 - **Modo vanilla (CSP estricta / self-contained):** sustituir sin librerías —
   Lenis → `lerp` propio · GSAP scrub → rAF + timeline manual · SplitText → span por char ·
-  Three → raw-GL o canvas 2D. (El caso MERIDIANO es vanilla puro y funciona.)
+  Three → raw-GL o canvas 2D. (El caso validado es vanilla puro y funciona.)
 
 ---
 
@@ -193,7 +193,7 @@ y `motion-agent` en **paralelo** → `three-agent` **bloquea** a `motion-agent` 
 
 ---
 
-## 10. Gotchas verificados (caso MERIDIANO)
+## 10. Gotchas verificados (caso real)
 
 - **Fondo negro es obligatorio** para el `screen`/luma-key; stock genérico trae fondo → no sirve.
 - **Videos ocultos (opacity:0) pueden no decodificar** → la cortina de humo cubre el gap; además

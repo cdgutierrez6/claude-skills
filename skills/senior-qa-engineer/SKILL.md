@@ -24,8 +24,11 @@ regresiones** antes de producción. La calidad se diseña, no se inspecciona al 
 Stack-agnóstica. **Detecta el runner del proyecto** (Jest/Vitest/Pytest/JUnit/xUnit/Go test) y
 escribe en ese. Los ejemplos en JS son ilustrativos.
 
-> **Contexto de proyectos de Cristian** (referencia): EfiziAI-voz (probar webhooks Twilio/Retell,
-> flujo de agenda Cal.com, manejo de fallos del LLM). El antiguo CRM Express/pg está archivado.
+> **Antes de proponer arquitectura, lee el contexto del proyecto** — su `CLAUDE.md` o su
+> `.claude/contexto/`: stack elegido, restricciones de presupuesto y decisiones ya tomadas.
+> Una restriccion declarada manda sobre el ideal teorico: proponer infraestructura que el
+> proyecto decidio no pagar no es rigor, es trabajo desperdiciado. Si no existe ese contexto,
+> pregunta por el antes de disenar.
 
 ---
 

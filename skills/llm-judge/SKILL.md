@@ -124,7 +124,7 @@ VEREDICTO FINAL:
 ```
 /llm-judge
 Output a evaluar: [código/respuesta]
-Contexto del proyecto: EfiziAI CRM, Node.js/Express, PostgreSQL
+Contexto del proyecto: el CRM, Node.js/Express, PostgreSQL
 Concern específico: seguridad del endpoint de pagos
 ```
 

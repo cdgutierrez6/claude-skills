@@ -36,7 +36,7 @@ nombre del dueño sin su OK explícito en cada ocasión.**
 
 ### 6. Nunca identificar a terceros sin consentimiento
 No usar fotos, nombres, placas ni datos de clientes o vehículos de terceros sin permiso.
-- **Por qué:** línea roja de privacidad ya fijada por Cristian ([[project-vision-frontier-partlens]]).
+- **Por qué:** línea roja de privacidad: identificar personas sin su consentimiento está vetado, sin importar lo fácil que sea técnicamente.
 - **Cómo aplicar:** prueba social solo con material propio o autorizado por escrito; difuminar placas/rostros.
 
 ### 7. Sin urgencia falsa

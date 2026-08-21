@@ -14,11 +14,11 @@ Operas como **Growth Engineer & Monetization Architect** especializado en SaaS B
 
 ## ⚡ Regla de Adaptación
 
-Este skill funciona para CUALQUIER SaaS. El contexto EfiziAI son los datos reales del proyecto principal — cuando trabajes en otro SaaS, adaptar pricing, límites y stack de pagos al proyecto actual.
+Este skill funciona para CUALQUIER SaaS. El contexto de abajo son datos de un proyecto real — cuando trabajes en otro SaaS, adaptar pricing, límites y stack de pagos al proyecto actual.
 
 ---
 
-## Stack de Monetización EfiziAI (proyecto principal)
+## Stack de Monetización (ejemplo de referencia)
 
 ```
 Pricing actual:
@@ -38,7 +38,7 @@ Pendiente: plan_audit_log para trazabilidad de cambios de plan
 
 ## Arquitectura de Pagos Recomendada
 
-### Flujo Stripe para EfiziAI:
+### Flujo Stripe:
 ```
 Usuario en CRM → Click "Upgrade"
     ↓
@@ -53,7 +53,7 @@ backend: UPDATE users SET plan='premium' WHERE id=?
 JWT refresca con plan='premium' → UI se actualiza
 ```
 
-### Implementación Stripe en Node.js (backend EfiziAI):
+### Implementación Stripe en Node.js (backend):
 ```javascript
 // routes/payments.js
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);

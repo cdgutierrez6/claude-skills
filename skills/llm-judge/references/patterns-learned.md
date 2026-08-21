@@ -36,7 +36,7 @@ Al finalizar cada evaluación, AGREGAR una entrada aquí si:
 
 <!-- INICIO DEL REGISTRO — los patrones se agregan debajo de esta línea -->
 
-## 2026-06-25 — Frontend/Landing — EfiziAI Recepcionista IA
+## 2026-06-25 — Frontend/Landing — recepcionista IA por voz
 **Punto ciego:** La copy del hero y secciones usa "paciente" en todo el sitio, pero el ICP declarado incluye barberías/salones/spas (clientes, no pacientes). Inconsistencia de posicionamiento contra el propio ICP.
 **Por qué el pipeline lo pasó:** El gate de revisión (tech-lead+seguridad+a11y/SEO+QA, 33 agentes) estaba calibrado a CÓDIGO — paridad i18n, headers, CLS, a11y. Ningún lente evaluaba "¿la copy le habla al ICP correcto?". La calidad de copywriting/posicionamiento cae fuera de un review técnico.
 **Señal de detección:** Cuando un rediseño define un ICP multi-vertical, verificar que el sustantivo central de la copy (paciente/cliente/usuario) sea inclusivo de TODAS las verticales listadas. Añadir un lente de "copy vs ICP" al gate de landings.
@@ -62,13 +62,13 @@ y 6 pares eran casi la misma idea en video y foto. Además, la integración que 
 ("reflejado sobre el cromo espejado") no se usó en ninguna de las 16.
 **Por qué el pipeline lo pasó por alto:** el gate estaba calibrado a la CALIDAD DEL PROMPT (composición,
 luz, claims, honestidad) y no al MEDIO DE DESTINO (UI de la plataforma) ni al MECANISMO DEL MODELO
-(cómo trata un image-input con fondo). Igual que el caso EfiziAI: se auditó el artefacto, no su contexto
+(cómo trata un image-input con fondo). Igual que el caso de la landing: se auditó el artefacto, no su contexto
 de consumo.
 **Señal de detección futura:** ante cualquier paquete de creatividades para redes verticales — (a) dibujar
 mentalmente la UI de la plataforma encima antes de aprobar la composición; (b) si hay image-input,
 preguntar siempre "¿qué hace el modelo con el fondo/encuadre de la referencia?"; (c) inventariar las
 integraciones en tabla y contar repeticiones, no confiar en que "se sienten distintas".
-**Frecuencia:** 1ª vez (pero comparte raíz con EfiziAI: RECURRENTE x2 en "el gate audita el artefacto,
+**Frecuencia:** 1ª vez (pero comparte raíz con el caso de la landing: RECURRENTE x2 en "el gate audita el artefacto,
 no su contexto de consumo real")
 **Severidad:** crítico
 
@@ -110,7 +110,7 @@ debe simularse hasta el mensaje entrante y la respuesta humana, no hasta el clic
 "¿quién ve esto y cuántos son?" antes de optimizar la pieza; (d) recalcular a mano todo ratio de
 contraste citado.
 **Frecuencia:** RECURRENTE x3 en la raíz "el gate audita el artefacto, no su contexto de consumo real"
-(EfiziAI copy-vs-ICP · prompts Veo3 safe-area · esta) → **proponer regla en CLAUDE.md: todo entregable
+(copy-vs-ICP · prompts Veo3 safe-area · esta) → **proponer regla en CLAUDE.md: todo entregable
 de cara al cliente se audita simulando el turno SIGUIENTE al entregable (quién lo ve, qué escribe, qué
 responde el humano), no solo el entregable.**
 **Severidad:** crítico
@@ -191,7 +191,7 @@ el ciclo COMPLETO: grant + revoke + expiry, no solo grant; (b) si una skill fija
 técnica futura (A/B), exigir que describa la PLOMERÍA de atribución, no solo el gatillo; (c) todo
 embudo declara sobre qué subpoblación se mide.
 **Frecuencia:** RECURRENTE x5 en la raíz "el gate audita el artefacto, no su contexto de consumo real"
-(EfiziAI · Veo3 · grilla · portapapeles · aquí ciclo-de-vida-consent + A/B-futuro).
+(landing · Veo3 · grilla · portapapeles · aquí ciclo-de-vida-consent + A/B-futuro).
 **Severidad:** importante (no bloquea; la baja de élite a "aprobado con observaciones")
 
 ## 2026-08-11 — CLI tool (story-tool, re-juicio del BUILD) — story
@@ -290,3 +290,60 @@ fail-closed, nunca un checklist.
 de consumo real" (aqui: el contexto es el comprador en EEUU, no el repo).
 **Severidad:** BLOQUEANTE comercial (LICENSE indefinida en 4 formas distintas) +
 importante (senal de idioma falsa).
+
+
+## 2026-08-21 — Frontend/Diseño (3 propuestas: carrusel esférico + z + quitar rótulo) — Estudio de landings
+**Punto ciego 1 (RECURRENTE "se audita el artefacto, no su contexto"):** el pedido "quitar el rótulo StagePlate"
+se especificó en las 3 propuestas como "borrar la línea `<StagePlate/>` de BeatSection y actualizar el test si
+existe". Pero el test EXISTE y no es incidental: `studio-page-contract.test.tsx:153-190` está rotulado "EL PEDIDO
+DE NEGOCIO, ESCRITO COMO TEST" y verifica que DENTRO de proof/templates/process/offer haya un `.stage-plate` con
+nombre+rubro+PROMESA. Quitar el render lo pone rojo en 4 beats y la línea de venta `studio.stagePlate.promise`
+desaparece de 3 beats donde el carrusel NO la repone. CREATIVE lo trató como hipotético, ARCH como "opcional", sólo
+UX cazó a medias la pérdida de la promesa. Es REGLA #6.0 (reversión de alcance = producto, no pulido) + REGLA #9
+(invariante-como-test): el fix no es borrar una línea, es RE-CODIFICAR el test a la nueva intención + REUBICAR la
+promesa (aditivo).
+**Punto ciego 2 (conflicto entre especialistas no reconciliado):** CREATIVE quiere laterales de canto (rotateY 90°);
+ARCH y UX quieren cards billboardeadas para que el texto siempre mire al usuario. Geometrías incompatibles; nadie
+corrió el diff. Para 4 productos-enlace con texto real gana billboard/coverflow; el "cuán esférico" es del dueño.
+**Punto ciego 3 (superficie CSP nueva sin guardia):** `scene3d-csp-contract.test.ts` lee SÓLO `Scene3D.tsx`. El 2º
+`<Canvas>` de CREATIVE (`OrbitScene3D.tsx`) quedaría fuera del contrato y podría violar la CSP en silencio — el modo
+de falla que ese test previene. Suma un 2º contexto GL por un glow que el CSS ya da. Recomendación: no construirlo o
+darle contrato espejo.
+**Señal de detección futura:** (a) ante "quitar/reducir X", grep del nombre en `__tests__/` ANTES de llamarlo pulido;
+(b) ante 3 propuestas, tabla de contradicciones (geometría, 2º canvas) antes de sintetizar; (c) componente nuevo que
+toque WebGL/CSP necesita su propio contrato — los hard-codeados a un archivo no cubren archivos nuevos.
+**Frecuencia:** RECURRENTE x4 en "se audita el artefacto, no su contexto de consumo real".
+**Severidad:** importante (no bloquea build; reversión de requisito + pérdida de copy que hay que hacer consciente).
+
+## 2026-08-20 — Backend/Frontend (cierre de hallazgos) — plataforma SaaS
+**Punto ciego 1 (RECURRENTE — "el gate audita el artefacto, no su contexto"):** los dos lotes
+trabajaron el MISMO camino de producción sin que ninguno lo notara. `landing-next`
+entrega a `WEBHOOK_URL = https://<api>/webhooks/lead-capture`, que es
+exactamente `backend/src/routes/webhooks.js:62` — la ruta cuyo `notifyClient`/`notifyTeam`
+reescribió el otro lote. Cada reporte declaró sus cambios por separado y nadie preguntó
+"¿la cadena landing → CRM → WhatsApp sigue entera?". Se auditaron dos archivos, no un flujo.
+**Punto ciego 2 (nombre de test que sobre-afirma):** el test `toda petición a WAHA sale con
+timeout` sólo instrumenta `sendWhatsApp` del servicio; `routes/meetings.js:285` y `:297`
+siguen haciendo fetch a WAHA SIN `AbortSignal` y el test pasa igual. Un nombre de test que
+declara un invariante global mientras verifica uno local es la misma falta que un comentario
+que miente (REGLA #9), y es peor: es la línea que el siguiente dev lee como prueba.
+**Punto ciego 3 (afirmación de infraestructura no verificable):** el código y la cabecera del
+test afirman como hecho que `http://waha:3000` "apuntaba a un contenedor que no existe".
+No hay `docker-compose` en el repo y nadie entró al VPS; en Compose el alias de servicio suele
+resolver igual que el nombre del contenedor. La afirmación es probablemente cierta (CLAUDE.md
+documenta `root-waha-1`) pero está escrita como medición y no lo es.
+**Punto ciego 4 (doc que quedó atrás):** la sesión de verificación añadió `SENALES_DE_APAGADO`
+(`off/false/0/no`) para que apagar la entrega no se reportara como error, y ató Dockerfile↔código
+con un test — pero `.env.example` sigue diciendo "se declara cualquier otro valor". La misma
+clase de deriva que acababa de arreglar, un archivo más allá.
+**Por qué el pipeline lo pasó por alto:** los dos lotes tenían alcance por ARCHIVO ("cerrá H2…H7",
+"cerrá H8…H10"). El alcance por archivo hace invisible tanto el flujo que los cruza como el
+gemelo del mismo bug que vive fuera del archivo asignado (`meetings.js`).
+**Señal de detección futura:** (a) antes de cerrar un lote, hacer `grep` de la constante de
+destino (URL/endpoint/tópico) y preguntar si otro lote de la misma ronda la toca; (b) todo test
+cuyo nombre empiece por "todo/toda/ninguno" debe verificarse contra `archivosFuente()` completo,
+no contra un módulo; (c) cuando un cambio introduce un vocabulario nuevo de configuración,
+buscar TODOS los lugares que documentan esa variable (`.env.example`, Dockerfile, README).
+**Frecuencia:** punto ciego 1 → RECURRENTE x3 (landing 2026-06-25, Taller Ejemplo
+2026-07-23, este). Puntos 2-4 → 1ª vez.
+**Severidad:** importante (ninguno bloquea; el 1 es el que puede costar leads en producción)

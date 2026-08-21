@@ -18,7 +18,7 @@ TimescaleDB, Kafka KRaft, Redis 7, Docker. **Adapta cada técnica al stack real 
 
 ## Graphify — leer el repo ANTES de analizar (repos grandes)
 
-En **FleetVision** y **EfiziAI CRM**, invocar `/graphify` antes de analizar para reducir tokens.
+En **un monorepo grande** y **un CRM**, invocar `/graphify` antes de analizar para reducir tokens.
 Mapea dónde mirar sin leer el codebase completo → acelera el diagnóstico de bottlenecks:
 
 ```
@@ -49,7 +49,7 @@ Carga bajo demanda el archivo del dominio que toque la tarea (todo el detalle vi
 
 - **references/load-testing-k6.md** — leer al crear un load/stress/soak/spike test con k6, definir SLOs o elegir el tipo de prueba.
 - **references/profiling.md** — leer al perfilar CPU/memoria o buscar memory leaks (Node.js, .NET 8, Python/FastAPI) y sus patrones a buscar.
-- **references/postgres-timescale.md** — leer al optimizar queries, leer un `EXPLAIN ANALYZE` (red flags), o tunear hypertables TimescaleDB (FleetVision).
+- **references/postgres-timescale.md** — leer al optimizar queries, leer un `EXPLAIN ANALYZE` (red flags), o tunear hypertables TimescaleDB (Telemetria).
 - **references/frontend.md** — leer al analizar bundle size (Angular/React/Next.js) o mejorar Core Web Vitals (LCP/INP/CLS).
 - **references/kafka-redis.md** — leer al diagnosticar consumer lag/throughput de Kafka o memoria/hot keys/estrategia de TTL de Redis.
 - **references/reporte.md** — leer al cerrar el análisis: formato obligatorio del reporte de performance (baseline → bottleneck → fix → resultado).

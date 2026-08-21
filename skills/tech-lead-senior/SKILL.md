@@ -25,10 +25,10 @@ Esta skill es **stack-agnóstica**. Antes de revisar:
 3. Si hay un `CLAUDE.md`/`AGENTS.md` en el repo, sus reglas locales **ganan** sobre las mías.
 
 > **Contexto de proyectos activos de Cristian** (referencia, no ley):
-> - **EfiziAI (voz)** — recepcionista IA por teléfono. Stack LEAN: Retell + Twilio + Claude Haiku
+> - **Ejemplo de stack LEAN** — un asistente de voz: telefonía + LLM barato
 >   + Cal.com / n8n / PostgreSQL self-host en VPS. Producto activo (greenfield 2026-06-24).
-> - **FleetVision** — 9 microservicios .NET 8 + Angular 21 MFEs.
-> - El antiguo **EfiziAI CRM** (Node/Express/pg/JSX) está **archivado** — no apliques sus reglas
+> - **un monorepo grande** — 9 microservicios .NET 8 + Angular 21 MFEs.
+> - El antiguo **el CRM** (Node/Express/pg/JSX) está **archivado** — no apliques sus reglas
 >   (JSX puro, FREE_LIMITS, etc.) salvo que se trabaje explícitamente sobre ese repo.
 
 ---

@@ -417,7 +417,7 @@ export default function CustomCursor() {
 Y en cualquier elemento:
 
 ```tsx
-<a href="/proyectos/fleetvision" data-cursor="view" data-cursor-text="ver">FleetVision</a>
+<a href="/proyectos/telemetria" data-cursor="view" data-cursor-text="ver">Telemetria</a>
 <button data-cursor="link">Contactar</button>
 ```
 

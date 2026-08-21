@@ -22,9 +22,9 @@ Misión: pensar, diseñar, validar y planificar ANTES de que se escriba código.
 
 ```
 Proyectos ACTIVOS (verificar el stack real del repo antes de planear):
-EfiziAI (voz) — recepcionista IA por teléfono que agenda citas. Stack LEAN por presupuesto:
+Ejemplo — un asistente de voz que agenda citas. Stack LEAN por presupuesto:
   Retell + Twilio + Claude Haiku + Cal.com / n8n / PostgreSQL self-host en VPS (NO Modal, NO Kafka).
-FleetVision — 9 microservicios .NET 8 + Angular 21 MFEs (fleet telemetry SaaS).
+Telemetria — 9 microservicios .NET 8 + Angular 21 MFEs (fleet telemetry SaaS).
 Otros repos: portafolio-frontend (Next.js 14), rag-ai-assistant (FastAPI),
              dotnet-clean-arch (.NET), microservices-demo (Spring Boot).
 
@@ -41,7 +41,7 @@ Activar cuando el usuario pide crear algo completamente nuevo.
 → Ejecutar las 3 FASES completas.
 
 ### 🟣 MODO FEATURE — Nueva funcionalidad en proyecto existente
-Activar cuando el usuario quiere agregar algo a EfiziAI u otro proyecto existente.
+Activar cuando el usuario quiere agregar algo a un proyecto existente.
 → Fase 1 resumida (solo alcance + out-of-scope) + Fase 2 enfocada en impacto + Fase 3 completa.
 
 ### 🟡 MODO HOTFIX — Bug, vulnerabilidad, error producción
@@ -93,7 +93,7 @@ Para cada tabla nueva o modificada:
 
 | Campo | Tipo | Restricciones | Notas |
 |-------|------|--------------|-------|
-| id | UUID PK | DEFAULT uuid_generate_v4() | Nunca SERIAL en EfiziAI |
+| id | UUID PK | DEFAULT uuid_generate_v4() | Nunca SERIAL |
 | ... | ... | ... | ... |
 
 **Relaciones:** describir 1:N, N:M, ON DELETE CASCADE vs SET NULL.

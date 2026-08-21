@@ -1,6 +1,6 @@
-# TimescaleDB — Patrones para FleetVision
+# TimescaleDB — Patrones para telemetria IoT
 
-Hypertables, continuous aggregates, retención y compresión para telemetría IoT. Ejemplos ilustrativos sobre FleetVision — adaptar al schema real.
+Hypertables, continuous aggregates, retención y compresión para telemetría IoT. Ejemplos ilustrativos sobre Telemetria — adaptar al schema real.
 
 ## Contenido
 

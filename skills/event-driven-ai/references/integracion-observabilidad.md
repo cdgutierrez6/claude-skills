@@ -1,13 +1,13 @@
 # Integración, Observabilidad y Arquitectura de referencia
 
 ## Contenido
-- [Integración con n8n (EfiziAI)](#integración-con-n8n-efiziai)
+- [Integración con n8n](#integración-con-n8n)
 - [Observabilidad de pipelines AI](#observabilidad-de-pipelines-ai)
-- [Arquitectura de referencia — EfiziAI Event-Driven AI](#arquitectura-de-referencia--efiziai-event-driven-ai)
+- [Arquitectura de referencia — Event-Driven AI](#arquitectura-de-referencia--event-driven-ai)
 
 ---
 
-## Integración con n8n (EfiziAI)
+## Integración con n8n
 
 ```
 n8n Workflow: "AI Lead Processor"
@@ -64,11 +64,11 @@ def process_event_with_tracing(event: dict) -> dict:
 
 ---
 
-## Arquitectura de referencia — EfiziAI Event-Driven AI
+## Arquitectura de referencia — Event-Driven AI
 
 ```
                     ┌──────────────────────────────────┐
-                    │         EfiziAI CRM              │
+                    │         el CRM              │
                     │   (Node.js + Express + React)    │
                     └─────────────┬────────────────────┘
                                   │ Produce eventos

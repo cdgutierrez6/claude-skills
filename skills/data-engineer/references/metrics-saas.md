@@ -1,6 +1,6 @@
-# Métricas SaaS — KPIs para EfiziAI
+# Métricas SaaS — KPIs
 
-Fórmulas de negocio y queries de health. Ejemplos ilustrativos sobre EfiziAI — adaptar al schema real.
+Fórmulas de negocio y queries de health. Ejemplos ilustrativos sobre un CRM B2B — adaptar al schema real.
 
 ## Fórmulas de negocio
 

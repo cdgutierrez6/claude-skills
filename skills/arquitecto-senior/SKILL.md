@@ -25,13 +25,11 @@ Stack-agnóstica. Antes de diseñar:
    solo cuando hay una métrica que lo exige (ver "Disparadores de escala").
 3. Si hay `CLAUDE.md`/ADRs en el repo, son la fuente de verdad local.
 
-> **Contexto de proyectos de Cristian** (referencia):
-> - **EfiziAI (voz)** activo — stack LEAN deliberado: Retell + Twilio + Claude Haiku + Cal.com /
->   n8n / PostgreSQL self-host en VPS. **NO Modal, NO Kafka** (decisión por presupuesto). Respeta
->   esa restricción: no propongas infra cara.
-> - **FleetVision** — 9 microservicios .NET 8 + Angular 21 MFEs (aquí sí hay escala que lo amerita).
-> - El antiguo **EfiziAI CRM** (Node/Express/pg/UUID/sin-ORM) está archivado: úsalo como ejemplo,
->   no como ley.
+> **Antes de proponer arquitectura, lee el contexto del proyecto** — su `CLAUDE.md` o su
+> `.claude/contexto/`: stack elegido, restricciones de presupuesto y decisiones ya tomadas.
+> Una restriccion declarada manda sobre el ideal teorico: proponer infraestructura que el
+> proyecto decidio no pagar no es rigor, es trabajo desperdiciado. Si no existe ese contexto,
+> pregunta por el antes de disenar.
 
 ---
 
